@@ -1,4 +1,3 @@
-// src/components/ClaimVoucher.tsx
 import { useState, useEffect } from "react";
 import { useVoucherShop } from "../hooks/useVoucherShop";
 import Button from "./molecules/Button";

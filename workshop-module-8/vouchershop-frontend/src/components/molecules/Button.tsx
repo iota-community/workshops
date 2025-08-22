@@ -1,4 +1,3 @@
-// src/components/molecules/Button.tsx
 import { Button as RadixButton } from "@radix-ui/themes";
 
 export default function Button({
@@ -15,7 +14,7 @@ export default function Button({
   return (
     <RadixButton
       radius="none"
-      style={{ background: "#0101ff", ...style }}
+      style={{ background: "#0101ff",  borderRadius: "8px", ...style }}
       onClick={onClick}
       disabled={disabled}
     >

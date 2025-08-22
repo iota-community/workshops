@@ -1,4 +1,3 @@
-// src/App.tsx
 import { ConnectButton } from "@iota/dapp-kit";
 import { Box, Flex, Heading } from "@radix-ui/themes";
 import { Link } from "react-router-dom";
@@ -14,7 +13,7 @@ function App() {
         justify="between"
         align="center"
         style={{
-          borderBottom: "1px solid var(--gray-a2)",
+          borderBottom: "1px solid var(--gray-a6)",
           background: "#000000",
         }}
       >

@@ -1,4 +1,3 @@
-// src/utils/errorHandling.ts
 export const ERROR_CODES = {
   EAlreadyClaimed: 1,
   ENoVoucher: 2,

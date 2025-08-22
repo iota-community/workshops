@@ -1,4 +1,3 @@
-// src/network/config.ts
 import { getFullnodeUrl } from "@iota/iota-sdk/client";
 import { createNetworkConfig } from "@iota/dapp-kit";
 

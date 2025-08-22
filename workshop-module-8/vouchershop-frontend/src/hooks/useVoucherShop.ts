@@ -1,4 +1,3 @@
-// src/hooks/useVoucherShop.ts
 import { useNetworkVariable } from "../network/config";
 import { useCurrentAccount, useSignAndExecuteTransaction, useIotaClient } from "@iota/dapp-kit";
 import { Transaction } from "@iota/iota-sdk/transactions";

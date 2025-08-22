@@ -1,4 +1,3 @@
-// src/components/Home.tsx
 import { Flex, Heading } from "@radix-ui/themes";
 import { useState } from "react";
 import { OPERATIONS } from "../constants";
@@ -22,7 +21,7 @@ export default function Home() {
           padding: "1rem", 
           marginBottom: "1rem",
           backgroundColor: "#d4edda", 
-          border: "1px solid #c3e6cb", 
+          border: "1px solid #12ef46ff", 
           borderRadius: "8px",
           textAlign: "center"
         }}>
@@ -37,7 +36,7 @@ export default function Home() {
       <AvailableVouchers />
 
       {account && (
-        <Flex direction="column" gap="3" mt="4" align="center">
+        <Flex direction="row" gap="6" mt="4" align="center">
       
           {activeOperation === null && (
             <>
@@ -59,12 +58,14 @@ export default function Home() {
           )}
 
           {activeOperation !== null && (
+            <Flex direction="column" align="center" mt="3" gap="3">
             <Button
               onClick={() => setActiveOperation(null)}
               style={{ background: "#e0e0e0", color: "#000" }}
             >
               ⬅ Back
             </Button>
+          </Flex>
           )}
         </Flex>
       )}

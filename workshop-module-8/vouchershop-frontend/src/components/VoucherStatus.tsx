@@ -1,4 +1,3 @@
-// src/components/VoucherStatus.tsx
 import { useEffect, useState } from "react";
 import { useVoucherShop } from "../hooks/useVoucherShop";
 import Loading from "./molecules/Loading";

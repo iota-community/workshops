@@ -1,4 +1,3 @@
-// src/constants/index.ts
 import { VoucherShopOperation } from "../types";
 
 export const OPERATIONS: VoucherShopOperation[] = [

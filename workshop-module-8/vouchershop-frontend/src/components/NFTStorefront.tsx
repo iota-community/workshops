@@ -1,4 +1,3 @@
-// src/components/NFTStorefront.tsx
 import { useEffect, useState } from "react";
 import { useVoucherShop } from "../hooks/useVoucherShop";
 import { NFTMetadata } from "../types";

@@ -1,4 +1,3 @@
-// src/types/index.ts
 export interface NFTMetadata {
   id: number;
   name: string;
