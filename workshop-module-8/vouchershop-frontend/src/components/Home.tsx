@@ -51,14 +51,16 @@ export default function Home() {
           {activeOperation === "ClaimVoucher" && <ClaimVoucher />}
 
           {activeOperation === "RedeemVoucher" && (
-            <>
+            <Flex direction="column" gap="4" align="center" style={{ width: "100%" }}>
               <NFTStorefront onSelect={setSelectedNft} />
               {selectedNft && <RedeemVoucher nftId={selectedNft} />}
-            </>
+            </Flex>
           )}
+        </Flex>
+      )}
 
-          {activeOperation !== null && (
-            <Flex direction="column" align="center" mt="3" gap="3">
+      {activeOperation !== null && (
+            <Flex direction="column" align="center" mt="2" gap="3">
             <Button
               onClick={() => setActiveOperation(null)}
               style={{ background: "#e0e0e0", color: "#000" }}
@@ -67,8 +69,6 @@ export default function Home() {
             </Button>
           </Flex>
           )}
-        </Flex>
-      )}
     </Flex>
   );
 }

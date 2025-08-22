@@ -54,15 +54,10 @@ export default function NFTStorefront({ onSelect }: { onSelect: (id: number) => 
                   // Parse the BCS encoded NFTMetadata vector
                   const rawData = returnValues[0][0];
                   console.log('Raw NFT data:', rawData);
-                  
-                  // The rawData is a BCS-encoded vector of NFTMetadata structs
-                  // Let's properly parse the BCS structure
+                 
                   const parsedNfts: NFTMetadata[] = [];
                   
                   try {
-                    // BCS format for vector<NFTMetadata>:
-                    // [vector_length] + [NFTMetadata_1] + [NFTMetadata_2] + ...
-                    // Each NFTMetadata: [id:u64] + [name_len] + [name_bytes] + [uri_len] + [uri_bytes] + [desc_len] + [desc_bytes]
                     
                     let offset = 0;
                     const data = new Uint8Array(rawData);
@@ -115,36 +110,7 @@ export default function NFTStorefront({ onSelect }: { onSelect: (id: number) => 
                       return;
                     }
                   } catch (parseError) {
-                    console.log('BCS parsing failed, trying string parsing:', parseError);
                     
-                    // Fallback to string parsing
-                    const dataStr = new TextDecoder('utf-8', { fatal: false }).decode(new Uint8Array(rawData));
-                    console.log('Decoded string attempt:', dataStr);
-                    
-                    // Parse based on known patterns from your commands
-                    if (dataStr.includes('Gold Voucher')) {
-                      parsedNfts.push({
-                        id: 1,
-                        name: "Gold Voucher",
-                        image_uri: "https://example.com/gold.png",
-                        description: "Premium gold level voucher"
-                      });
-                    }
-                    
-                    if (dataStr.includes('Silver Voucher')) {
-                      parsedNfts.push({
-                        id: 2,
-                        name: "Silver Voucher",
-                        image_uri: "https://png.pngtree.com/png-clipart/20220830/ourmid/pngtree-silver-nft-coin-transparent-clipart-png-image_6130633.png",
-                        description: "Premium silver level voucher"
-                      });
-                    }
-                    
-                    if (parsedNfts.length > 0) {
-                      console.log('String parsing successful:', parsedNfts);
-                      setNfts(parsedNfts);
-                      return;
-                    }
                   }
                 }
               }
@@ -152,36 +118,7 @@ export default function NFTStorefront({ onSelect }: { onSelect: (id: number) => 
               console.log('DevInspect failed, falling back to manual approach:', inspectError);
             }
             
-            // Fallback: Create NFTs based on the IDs and known data from your commands
-            const fallbackNfts: NFTMetadata[] = [];
             
-            for (const nftId of nftIds) {
-              if (nftId === 1 || nftId === '1') {
-                fallbackNfts.push({
-                  id: 1,
-                  name: "Gold Voucher",
-                  image_uri: "https://example.com/gold.png",
-                  description: "Premium gold level voucher"
-                });
-              } else if (nftId === 2 || nftId === '2') {
-                fallbackNfts.push({
-                  id: 2,
-                  name: "Silver Voucher",
-                  image_uri: "https://png.pngtree.com/png-clipart/20220830/ourmid/pngtree-silver-nft-coin-transparent-clipart-png-image_6130633.png",
-                  description: "Premium silver level voucher"
-                });
-              } else {
-                fallbackNfts.push({
-                  id: typeof nftId === 'string' ? parseInt(nftId) : nftId,
-                  name: `NFT Template ${nftId}`,
-                  image_uri: `https://example.com/nft${nftId}.png`,
-                  description: `NFT Template with ID ${nftId}`
-                });
-              }
-            }
-            
-            console.log('Using fallback NFTs:', fallbackNfts);
-            setNfts(fallbackNfts);
           } else {
             setError("No NFT templates available in the catalog");
           }
@@ -222,10 +159,10 @@ export default function NFTStorefront({ onSelect }: { onSelect: (id: number) => 
   }
 
   return (
-    <div>
-      <h2>Available NFTs</h2>
+    <div style={{ backgroundColor: "#121212", padding: "2rem", borderRadius: "12px" }}>
+      <h2 style={{ color: "#ffffff", marginBottom: "1.5rem", textAlign: "center" }}>Available NFTs</h2>
       {nfts.length === 0 ? (
-        <div>
+        <div style={{ color: "#bbb", textAlign: "center" }}>
           <p>No NFTs available.</p>
           <p>
             Check the{' '}
@@ -241,25 +178,37 @@ export default function NFTStorefront({ onSelect }: { onSelect: (id: number) => 
           </p>
         </div>
       ) : (
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))", gap: "1rem", marginTop: "1rem" }}>
+        <div
+  style={{
+    display: "flex",
+    flexWrap: "wrap",
+    gap: "1.5rem",
+    justifyContent: "center",
+    marginTop: "1rem",
+  }}
+>
           {nfts.map((nft) => (
             <div 
               key={nft.id} 
               onClick={() => onSelect(nft.id)} 
               style={{ 
-                cursor: "pointer", 
-                border: "2px solid #333", 
-                padding: "1rem",
-                borderRadius: "12px",
-                backgroundColor: "#1e1e1e",
-                transition: "all 0.2s ease"
+                cursor: "pointer",
+    border: "2px solid #222",
+    padding: "1rem",
+    borderRadius: "12px",
+    backgroundColor: "#1e1e1e",
+    width: "220px",
+    transition: "all 0.3s ease",
+    boxShadow: "0 0 10px rgba(0,0,0,0.4)",
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.borderColor = "#0101ff";
-                e.currentTarget.style.transform = "translateY(-2px)";
+                e.currentTarget.style.borderColor = "#4dabf7";
+                e.currentTarget.style.boxShadow = "0 0 15px rgba(77,171,247,0.7)";
+                e.currentTarget.style.transform = "translateY(-4px)";
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.borderColor = "#333";
+                e.currentTarget.style.borderColor = "#222";
+                e.currentTarget.style.boxShadow = "0 0 10px rgba(0,0,0,0.4)";
                 e.currentTarget.style.transform = "translateY(0)";
               }}
             >
@@ -268,11 +217,11 @@ export default function NFTStorefront({ onSelect }: { onSelect: (id: number) => 
                   src={nft.image_uri} 
                   alt={nft.name} 
                   style={{ 
-                    width: "120px", 
-                    height: "120px", 
+                    width: "100%", 
+                    height: "160px", 
                     objectFit: "cover",
                     borderRadius: "8px",
-                    border: "1px solid #555"
+                    border: "1px solid #444"
                   }}
                   onError={(e) => {
                     // Use a working fallback image
@@ -281,28 +230,32 @@ export default function NFTStorefront({ onSelect }: { onSelect: (id: number) => 
                 />
               </div>
               <h3 style={{ margin: "0.5rem 0", color: "#ffffff", fontSize: "1.1rem" }}>{nft.name}</h3>
-              <p style={{ margin: "0.5rem 0", color: "#cccccc", fontSize: "0.9rem" }}>{nft.description}</p>
-              <div style={{ 
-                marginTop: "1rem", 
-                padding: "0.5rem", 
-                backgroundColor: "#333", 
-                borderRadius: "6px" 
-              }}>
-                <p style={{ margin: "0", color: "#ffffff", fontWeight: "bold" }}>
-                  Template ID: {nft.id}
-                </p>
-              </div>
-              <div style={{ 
-                marginTop: "0.5rem", 
-                padding: "0.5rem", 
-                backgroundColor: "#0101ff", 
-                borderRadius: "6px",
-                textAlign: "center",
-                color: "white",
-                fontWeight: "bold"
-              }}>
-                Click to Select
-              </div>
+              <p style={{ margin: "0.5rem 0", color: "#bbb", fontSize: "0.9rem" }}>{nft.description}</p>
+              <div
+  style={{
+    marginTop: "0.8rem",
+    padding: "0.5rem",
+    backgroundColor: "#2a2a2a",
+    borderRadius: "6px",
+    textAlign: "center",
+    color: "#ddd",
+  }}
+>
+  Template ID: {nft.id}
+</div>
+              <div
+  style={{
+    marginTop: "0.6rem",
+    padding: "0.6rem",
+    backgroundColor: "#4dabf7",
+    borderRadius: "6px",
+    textAlign: "center",
+    color: "white",
+    fontWeight: "bold",
+  }}
+>
+  Click to Select
+</div>
             </div>
           ))}
         </div>

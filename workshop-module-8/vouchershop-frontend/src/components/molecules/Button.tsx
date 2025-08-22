@@ -14,7 +14,7 @@ export default function Button({
   return (
     <RadixButton
       radius="none"
-      style={{ background: "#0101ff",  borderRadius: "8px", ...style }}
+      style={{ background: "#0101ff",  borderRadius: "8px",cursor: 'pointer', ...style }}
       onClick={onClick}
       disabled={disabled}
     >
