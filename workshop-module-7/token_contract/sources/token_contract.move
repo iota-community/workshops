@@ -299,9 +299,10 @@ module token_contract::wkt {
     }
 
     // ===================== View Functions =====================
-    public fun has_claimed(faucet: &Faucet, addr: address): bool {
-        table::contains(&faucet.claimed, addr)
-    }
+// Returns true if the given address has claimed *today*
+public fun has_claimed(faucet: &Faucet, addr: address): bool {
+    table::contains(&faucet.claimed, addr)
+}
 
     public fun has_redeemed_badge(faucet: &Faucet, addr: address): bool {
         table::contains(&faucet.nft_redeemed, addr)
