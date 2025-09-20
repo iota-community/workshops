@@ -12,8 +12,8 @@ const { networkConfig, useNetworkVariable } = createNetworkConfig({
   testnet: {
     url: getFullnodeUrl("testnet"),
     variables: {
-      packageId: "0x0dbf03185407dceef5e2aa22e8cf411794b093f5eea79ccb100e14b7f17b9ab7",
-      faucetObject: "0xa26ad50787d402726438129bf610bf83c6c4cf0e28d0f8f8f5d5bc1bdf42eb41"
+      packageId: "0x8effd4f141f4ef8692450e25fddc771a031c5645770b507de2e4eee7cb20a3bd",
+      faucetObject: "0x8718a993b6291dee7908cff22848477b7de2401e70875c225d19cf3ce70be88b"
     }
   }
 });

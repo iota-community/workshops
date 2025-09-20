@@ -37,40 +37,39 @@ export const useWKTContract = () => {
 
 // Check if user has claimed today
 const checkHasClaimed = async (address: string): Promise<boolean> => {
-  if (!address) return false;
+    if (!address) return false;
 
-  try {
-    
-    const tx = new Transaction();
-    tx.moveCall({
-      target: `${packageId}::wkt::has_claimed`,
-      arguments: [
-        tx.object(faucetObject), 
-        tx.pure.address(address),
-      ]
-    });
+    try {
+        const tx = new Transaction();
+        tx.moveCall({
+            target: `${packageId}::wkt::view_claim_status`,
+            arguments: [tx.object(faucetObject)],
+        });
 
-    const result = await client.devInspectTransactionBlock({
-      transactionBlock: tx,
-      sender: address
-    });
+        const result = await client.devInspectTransactionBlock({
+            transactionBlock: tx,
+            sender: address,
+        });
 
-    console.log("has_claimed result:", result);
+        console.log("view_claim_status simulation result:", result);
 
-    if (result.results && result.results.length > 0) {
-      const returnValues = result.results[0]?.returnValues;
-      if (returnValues && returnValues.length > 0) {
-        // The contract returns 1 for true, 0 for false
-        const hasClaimed = returnValues[0][0][0] === 1;
-        console.log("User has claimed today:", hasClaimed);
-        return hasClaimed;
-      }
+        if (result.events && result.events.length > 0) {
+            const claimStatusEvent = result.events.find(e =>
+                e.type.endsWith('::wkt::ClaimStatus')
+            );
+
+            if (claimStatusEvent) {
+                const hasClaimed = (claimStatusEvent.parsedJson as any)?.has_claimed_today || false;
+                console.log("User has claimed today (from event):", hasClaimed);
+                return hasClaimed;
+            }
+        }
+
+        return false;
+    } catch (error) {
+        console.error("Error checking claim status:", error);
+        return false;
     }
-    return false;
-  } catch (error) {
-    console.error("Error checking claim status:", error);
-    return false;
-  }
 };
 
 

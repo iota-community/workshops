@@ -39,6 +39,11 @@ module token_contract::wkt {
         is_coupon: bool
     }
 
+    public struct ClaimStatus has copy, drop {
+    queried_address: address,
+    has_claimed_today: bool
+    }
+
     public struct BadgeMinted has copy, drop {
         recipient: address,
         badge_id: ID,
@@ -299,9 +304,23 @@ module token_contract::wkt {
     }
 
     // ===================== View Functions =====================
-// Returns true if the given address has claimed *today*
-public fun has_claimed(faucet: &Faucet, addr: address): bool {
-    table::contains(&faucet.claimed, addr)
+// This is an entry function to be used with devInspectTransactionBlock for a safe, read-only check.
+public entry fun view_claim_status(faucet: &Faucet, ctx: &mut TxContext) {
+    let sender = tx_context::sender(ctx);
+    let now_ms = ctx.epoch_timestamp_ms();
+    let today = now_ms / 86400000u64;
+
+    let claimed_today = if (table::contains(&faucet.claimed, sender)) {
+        let last_claim_day = *table::borrow(&faucet.claimed, sender);
+        last_claim_day == today
+    } else {
+        false
+    };
+
+    event::emit(ClaimStatus {
+        queried_address: sender,
+        has_claimed_today: claimed_today
+    });
 }
 
     public fun has_redeemed_badge(faucet: &Faucet, addr: address): bool {
