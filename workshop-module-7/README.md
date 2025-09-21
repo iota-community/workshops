@@ -132,7 +132,7 @@ pnpm install
 
 3) Run
 ```bash
-npm run dev
+pnpm run dev
 ```
 
 - Open the local URL, connect a wallet, and ensure network is testnet.
@@ -211,6 +211,7 @@ npm run dev
 - Keep admin keys secure; admin equals Faucet-stored address.
 - Coupon codes are plain strings; use sufficiently random tokens.
 - Badge image URLs should be trusted and reviewed by admins.
+
 
 ## Acknowledgements
 
