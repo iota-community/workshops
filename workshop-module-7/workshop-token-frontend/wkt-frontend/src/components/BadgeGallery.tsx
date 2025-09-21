@@ -61,7 +61,7 @@ export default function BadgeGallery() {
       ) : (
         <Flex
           wrap="wrap"
-          gap="16"
+          gap="8"
           justify="center"
           style={{ width: "100%", maxWidth: 880 }}
         >
