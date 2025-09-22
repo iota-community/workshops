@@ -1,8 +1,8 @@
 import * as TooltipPrimitive from "@radix-ui/react-tooltip";
-import { ReactNode, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { FiInfo } from "react-icons/fi";
+import { TooltipProps } from "../../types";
 
-// Keyframes for a smooth "pop-up" animation with bounce effect
 const keyframes = `
   @keyframes tooltip-pop-up {
     0% {
@@ -37,13 +37,6 @@ if (typeof window !== "undefined") {
     styleSheet.textContent = keyframes;
     document.head.appendChild(styleSheet);
   }
-}
-
-interface TooltipProps {
-  content: ReactNode;
-  children: ReactNode;
-  side?: "top" | "right" | "bottom" | "left";
-  align?: "start" | "center" | "end";
 }
 
 export default function Tooltip({

@@ -1,12 +1,6 @@
 import { Button as RadixButton } from "@radix-ui/themes";
 import { forwardRef } from "react";
-
-interface ButtonProps {
-  children: React.ReactNode;
-  onClick?: () => void;
-  disabled?: boolean;
-  style?: React.CSSProperties;
-}
+import { ButtonProps } from "../../types";
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   ({ children, onClick, disabled = false, style = {} }, ref) => {

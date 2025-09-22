@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import Button from "../molecules/Button";
 import { FiArrowDown, FiGift, FiCreditCard, FiAward } from "react-icons/fi";
 import Tooltip from "../molecules/Tooltip";
+import { ActionTabsProps } from "../../types";
 
 // Dark theme color scheme
 const colors = {
@@ -54,15 +55,6 @@ const tabButtonBaseStyle = {
   justifyContent: "center",
   gap: 8,
 };
-
-interface ActionTabsProps {
-  selectedTab: "tab1" | "tab2";
-  setSelectedTab: (tab: "tab1" | "tab2") => void;
-  hasClaimed: boolean;
-  hasRedeemed: boolean;
-  totalBalance: bigint;
-  badges: any[];
-}
 
 export default function ActionTabs({
   selectedTab,

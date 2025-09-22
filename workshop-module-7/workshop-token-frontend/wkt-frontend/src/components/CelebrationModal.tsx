@@ -1,16 +1,9 @@
 import { Card, Flex, Text, Box } from "@radix-ui/themes";
 import Confetti from "react-confetti";
 import { useState, useEffect } from "react";
-import { WorkshopBadge } from "../types";
+import { CelebrationModalProps } from "../types";
 import Button from "./molecules/Button";
 
-interface CelebrationModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-  badge: WorkshopBadge | null;
-}
-
-// A simple hook to get window dimensions for the confetti
 const useWindowSize = () => {
   const [windowSize, setWindowSize] = useState({
     width: window.innerWidth,

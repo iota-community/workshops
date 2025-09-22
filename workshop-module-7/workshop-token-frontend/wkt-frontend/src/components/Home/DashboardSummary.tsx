@@ -1,4 +1,5 @@
 import { Flex, Text, Card, Box, Heading } from "@radix-ui/themes";
+import { DashboardSummaryProps } from "../../types";
 import {
   FiUser,
   FiCreditCard,
@@ -53,14 +54,6 @@ const statusBadgeStyle = (status: boolean) => ({
     ? "1px solid rgba(245, 101, 101, 0.3)"
     : "1px solid rgba(72, 187, 120, 0.3)",
 });
-
-interface DashboardSummaryProps {
-  account: any;
-  totalBalance: bigint;
-  badges: any[];
-  hasClaimed: boolean;
-  hasRedeemed: boolean;
-}
 
 export default function DashboardSummary({
   account,
