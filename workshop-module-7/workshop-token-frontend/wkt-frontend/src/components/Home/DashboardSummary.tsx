@@ -9,51 +9,7 @@ import {
   FiPieChart,
 } from "react-icons/fi";
 
-// Dark theme color scheme
-const colors = {
-  primary: "#805ad5",
-  primaryLight: "#9f7aea",
-  success: "#48bb78",
-  warning: "#ecc94b",
-  error: "#f56565",
-  background: "#1a202c",
-  cardBackground: "#2d3748",
-  textPrimary: "#e2e8f0",
-  textSecondary: "#b5bec9ff",
-  border: "#4a5568",
-  accent1: "#0bc5ea",
-  accent2: "#f56565",
-};
-
-// Card style
-const cardStyle = {
-  background: colors.cardBackground,
-  padding: 28,
-  borderRadius: 16,
-  border: "1px solid",
-  borderColor: colors.border,
-  boxShadow:
-    "0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3)",
-  width: "100%",
-  color: colors.textPrimary,
-  transition: "all 0.3s ease",
-};
-
-// Status badge styles
-const statusBadgeStyle = (status: boolean) => ({
-  display: "inline-flex",
-  alignItems: "center",
-  gap: 6,
-  padding: "6px 12px",
-  borderRadius: 20,
-  fontSize: 14,
-  fontWeight: 500,
-  background: status ? "rgba(245, 101, 101, 0.15)" : "rgba(72, 187, 120, 0.15)",
-  color: status ? colors.error : colors.success,
-  border: status
-    ? "1px solid rgba(245, 101, 101, 0.3)"
-    : "1px solid rgba(72, 187, 120, 0.3)",
-});
+import "./HomeStyles.css";
 
 export default function DashboardSummary({
   account,
@@ -64,25 +20,16 @@ export default function DashboardSummary({
 }: DashboardSummaryProps) {
   if (!account) {
     return (
-      <Card
-        style={{
-          padding: 40,
-          width: "100%",
-          maxWidth: 600,
-          textAlign: "center",
-          borderRadius: 12,
-          background: "linear-gradient(135deg, #1a1f2d 0%, #131722 100%)",
-          boxShadow:
-            "0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.5)",
-          border: "1px solid #2d3748",
-          color: "#a0aec0",
-        }}
-      >
+      <Card className="card-dashboard-empty">
         <FiUser size={40} style={{ margin: "0 auto 16px", color: "#4a5568" }} />
         <Text
           size="6"
           weight="medium"
-          style={{ display: "block", marginBottom: 8, color: "#e2e8f0" }}
+          style={{
+            display: "block",
+            marginBottom: 8,
+            color: "var(--text-primary)",
+          }}
         >
           Welcome to WKT Dashboard
         </Text>
@@ -94,35 +41,17 @@ export default function DashboardSummary({
   }
 
   return (
-    <Card style={{ ...cardStyle, position: "relative", overflow: "hidden" }}>
+    <Card className="card-base">
       <Flex direction="column" align="center" gap="2">
-        <Box
-          style={{
-            background: "linear-gradient(135deg, #805ad5 0%, #9f7aea 100%)",
-            padding: 12,
-            borderRadius: 12,
-            marginBottom: 8,
-            boxShadow: "0 0 20px rgba(159, 122, 234, 0.4)",
-          }}
-        >
+        <Box className="box-gradient-bg">
           <FiPieChart size={32} color="white" />
         </Box>
-        <Heading
-          size="7"
-          style={{
-            color: colors.textPrimary,
-            fontWeight: 700,
-            textAlign: "center",
-            background: "linear-gradient(90deg, #9f7aea, #0bc5ea)",
-            WebkitBackgroundClip: "text",
-            WebkitTextFillColor: "transparent",
-          }}
-        >
+        <Heading size="7" className="heading-gradient-text">
           WKT Token Dashboard
         </Heading>
         <Text
           size="4"
-          style={{ color: colors.textSecondary, textAlign: "center" }}
+          style={{ color: "var(--text-secondary)", textAlign: "center" }}
         >
           Manage your tokens, badges, and rewards
         </Text>
@@ -135,50 +64,30 @@ export default function DashboardSummary({
           left: 0,
           right: 0,
           height: 6,
-          background:
-            "linear-gradient(90deg, #805ad5 0%, #9f7aea 50%, #0bc5ea 100%)",
+          background: "var(--background-gradient5)",
         }}
       />
       <Flex direction="column" gap="4">
         <Text
           size="5"
           weight="bold"
-          style={{ color: colors.textPrimary, marginTop: 4 }}
+          style={{ color: "var(--text-primary)", marginTop: 4 }}
         >
           Account Summary
         </Text>
 
-        <Flex
-          gap="4"
-          align="center"
-          style={{
-            padding: "12px 16px",
-            background: "#2a3142",
-            borderRadius: 12,
-          }}
-        >
-          <FiUser size={20} color={colors.primaryLight} />
+        <Flex className="flex-account-summary">
+          <FiUser size={20} color="var(--primary-light)" />
           <Text
             size="3"
-            style={{ color: colors.textSecondary, fontFamily: "monospace" }}
+            style={{ color: "var(--text-secondary)", fontFamily: "monospace" }}
           >
             {account.address.slice(0, 8)}...{account.address.slice(-6)}
           </Text>
         </Flex>
 
         <Flex gap="4" wrap="wrap" style={{ marginTop: 8 }}>
-          <Flex
-            direction="column"
-            style={{
-              flex: 1,
-              minWidth: 200,
-              padding: 16,
-              background: "linear-gradient(135deg, #2d3748 0%, #322659 100%)",
-              borderRadius: 12,
-              border: "1px solid #44337a",
-            }}
-            gap="2"
-          >
+          <Flex className="card-detail card-detail-1" gap="2">
             <Flex gap="2" align="center">
               <Box
                 style={{
@@ -187,33 +96,26 @@ export default function DashboardSummary({
                   borderRadius: 6,
                 }}
               >
-                <FiCreditCard size={16} color={colors.primaryLight} />
+                <FiCreditCard size={16} color="var(--primary-light)" />
               </Box>
               <Text
                 size="2"
                 weight="medium"
-                style={{ color: colors.textSecondary }}
+                style={{ color: "var(--text-secondary)" }}
               >
                 Total Balance
               </Text>
             </Flex>
-            <Text size="5" weight="bold" style={{ color: colors.primaryLight }}>
+            <Text
+              size="5"
+              weight="bold"
+              style={{ color: "var(--primary-light)" }}
+            >
               {totalBalance.toString()} WKT
             </Text>
           </Flex>
 
-          <Flex
-            direction="column"
-            style={{
-              flex: 1,
-              minWidth: 200,
-              padding: 16,
-              background: "linear-gradient(135deg, #2d3748 0%, #22543d 100%)",
-              borderRadius: 12,
-              border: "1px solid #2f855a",
-            }}
-            gap="2"
-          >
+          <Flex className="card-detail card-detail-2" gap="2">
             <Flex gap="2" align="center">
               <Box
                 style={{
@@ -222,17 +124,17 @@ export default function DashboardSummary({
                   borderRadius: 6,
                 }}
               >
-                <FiAward size={16} color={colors.success} />
+                <FiAward size={16} color="var(--success)" />
               </Box>
               <Text
                 size="2"
                 weight="medium"
-                style={{ color: colors.textSecondary }}
+                style={{ color: "var(--text-secondary)" }}
               >
                 Badges Earned
               </Text>
             </Flex>
-            <Text size="5" weight="bold" style={{ color: colors.success }}>
+            <Text size="5" weight="bold" style={{ color: "var(--success)" }}>
               {badges.length}
             </Text>
           </Flex>
@@ -246,34 +148,38 @@ export default function DashboardSummary({
               flex: 1,
               minWidth: 200,
               padding: "12px 16px",
-              background: "#2a3142",
               borderRadius: 12,
+              backgroundColor: "var(--background-alt1)",
             }}
           >
             <Box
-              style={{
-                padding: 8,
-                background: hasClaimed
-                  ? "rgba(245, 101, 101, 0.2)"
-                  : "rgba(72, 187, 120, 0.2)",
-                borderRadius: 6,
-              }}
+              className={
+                hasClaimed
+                  ? "status-badge status-badge-error"
+                  : "status-badge status-badge-success"
+              }
             >
               {hasClaimed ? (
-                <FiXCircle size={18} color={colors.error} />
+                <FiXCircle size={18} color="var(--error)" />
               ) : (
-                <FiCheckCircle size={18} color={colors.success} />
+                <FiCheckCircle size={18} color="var(--success)" />
               )}
             </Box>
             <Flex direction="column">
               <Text
                 size="2"
                 weight="medium"
-                style={{ color: colors.textSecondary }}
+                style={{ color: "var(--text-secondary)" }}
               >
                 Daily Claim
               </Text>
-              <span style={statusBadgeStyle(hasClaimed)}>
+              <span
+                className={
+                  hasClaimed
+                    ? "status-badge status-badge-error"
+                    : "status-badge status-badge-success"
+                }
+              >
                 {hasClaimed ? (
                   <>
                     <FiXCircle size={14} />
@@ -296,34 +202,38 @@ export default function DashboardSummary({
               flex: 1,
               minWidth: 200,
               padding: "12px 16px",
-              background: "#2a3142",
+              backgroundColor: "var(--background-alt1)",
               borderRadius: 12,
             }}
           >
             <Box
-              style={{
-                padding: 8,
-                background: hasRedeemed
-                  ? "rgba(245, 101, 101, 0.2)"
-                  : "rgba(72, 187, 120, 0.2)",
-                borderRadius: 6,
-              }}
+              className={
+                hasRedeemed
+                  ? "status-badge status-badge-error"
+                  : "status-badge status-badge-success"
+              }
             >
               {hasRedeemed ? (
-                <FiXCircle size={18} color={colors.error} />
+                <FiXCircle size={18} color="var(--error)" />
               ) : (
-                <FiCheckCircle size={18} color={colors.success} />
+                <FiCheckCircle size={18} color="var(--success)" />
               )}
             </Box>
             <Flex direction="column">
               <Text
                 size="2"
                 weight="medium"
-                style={{ color: colors.textSecondary }}
+                style={{ color: "var(--text-secondary)" }}
               >
                 Badge Redemption
               </Text>
-              <span style={statusBadgeStyle(hasRedeemed)}>
+              <span
+                className={
+                  hasRedeemed
+                    ? "status-badge status-badge-error"
+                    : "status-badge status-badge-success"
+                }
+              >
                 {hasRedeemed ? (
                   <>
                     <FiXCircle size={14} />

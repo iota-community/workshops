@@ -6,7 +6,7 @@ import ActionTabs from "./ActionTabs";
 import OwnedObjects from "../../OwnedObjects";
 import Loading from "../molecules/Loading";
 import { TokenBalance, WorkshopBadge } from "../../types";
-
+import "./HomeStyles.css";
 export default function Home() {
   const {
     account,

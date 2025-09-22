@@ -1,0 +1,234 @@
+/* Color palette */
+:root {
+  --primary: #805ad5;
+  --primary-light: #9f7aea;
+  --success: #48bb78;
+  --warning: #ecc94b;
+  --error: #f56565;
+  --background: #1a202c;
+  --card-background: #2d3748;
+  --text-primary: #e2e8f0;
+  --text-secondary: #b5bec9f;
+  --text-secondary-alt: #a0aec0;
+  --border: #4a5568;
+  --accent1: #0bc5ea;
+  --accent2: #f56565;
+
+  --background-alt1: #2a3142;
+  --background-alt2: #2d3748;
+  --background-gradient1: linear-gradient(135deg, #805ad5 0%, #9f7aea 100%);
+  --background-gradient2: linear-gradient(90deg, #9f7aea, #0bc5ea);
+  --background-gradient3: linear-gradient(135deg, #2d3748 0%, #322659 100%);
+  --background-gradient4: linear-gradient(135deg, #2d3748 0%, #22543d 100%);
+  --background-gradient5: linear-gradient(
+    90deg,
+    #805ad5 0%,
+    #9f7aea 50%,
+    #0bc5ea 100%
+  );
+}
+
+/* Flex containers */
+.flex-column-center-gap8 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  max-width: 800px;
+  margin: auto;
+  padding: 0 16px 40px;
+  min-height: 100vh;
+}
+
+.flex-gap4-wrap {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+/* Card styles */
+.card-base {
+  padding: 28px;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.4),
+    0 2px 4px -1px rgba(0, 0, 0, 0.3);
+  width: 100%;
+  color: var(--text-primary);
+  background-color: var(--card-background);
+  transition: all 0.3s ease;
+  overflow: hidden;
+  position: relative;
+}
+
+.card-dashboard-empty {
+  padding: 40px;
+  max-width: 600px;
+  text-align: center;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #1a1f2d 0%, #131722 100%);
+  box-shadow:
+    0 10px 25px -5px rgba(0, 0, 0, 0.5),
+    0 8px 10px -6px rgba(0, 0, 0, 0.5);
+  border: 1px solid #2d3748;
+  color: var(--text-secondary-alt);
+}
+
+/* Header box with gradient bg */
+.box-gradient-bg {
+  background: var(--background-gradient1);
+  padding: 12px;
+  border-radius: 12px;
+  margin-bottom: 8px;
+  box-shadow: 0 0 20px rgba(159, 122, 234, 0.4);
+}
+
+/* Heading with gradient text */
+.heading-gradient-text {
+  color: var(--text-primary);
+  font-weight: 700;
+  text-align: center;
+  background: var(--background-gradient2);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Account summary flex */
+.flex-account-summary {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  padding: 12px 16px;
+  background-color: var(--background-alt1);
+  border-radius: 12px;
+}
+
+/* Card details sections */
+.card-detail {
+  flex: 1;
+  min-width: 200px;
+  padding: 16px;
+  border-radius: 12px;
+  color: var(--text-secondary-alt);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.card-detail-1 {
+  background: var(--background-gradient3);
+  border: 1px solid #44337a;
+}
+
+.card-detail-2 {
+  background: var(--background-gradient4);
+  border: 1px solid #2f855a;
+}
+
+/* Badge earned count style */
+.badge-earned {
+  margin-left: auto;
+}
+
+/* Status badge */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.status-badge-success {
+  background: rgba(72, 187, 120, 0.15);
+  color: var(--success);
+  border: 1px solid rgba(72, 187, 120, 0.3);
+}
+
+.status-badge-error {
+  background: rgba(245, 101, 101, 0.15);
+  color: var(--error);
+  border: 1px solid rgba(245, 101, 101, 0.3);
+}
+
+/* Tab list styles */
+.tabs-list {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 24px;
+  user-select: none;
+  background-color: var(--card-background);
+  border-radius: 12px 12px 0 0;
+  padding: 0 8px;
+}
+
+/* Tab trigger buttons */
+.tab-trigger {
+  flex: 1;
+  padding: 16px 0;
+  background: transparent;
+  border: none;
+  color: var(--text-secondary-alt);
+  font-weight: 600;
+  cursor: pointer;
+  text-align: center;
+  font-size: 16px;
+  border-bottom: 2px solid transparent;
+  transition: all 0.3s ease;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.tab-trigger.active {
+  color: var(--primary-light);
+  border-bottom: 2px solid var(--primary-light);
+  font-weight: 700;
+  background: rgba(123, 97, 255, 0.1);
+}
+
+/* Button styles that repeat in tabs */
+.tab-button {
+  color: white;
+  min-width: 180px;
+  padding: 14px 20px;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.tab-button.disabled {
+  background-color: var(--text-secondary-alt);
+  opacity: 0.6;
+}
+
+.tab-button.primary-gradient {
+  background: var(--background-gradient1);
+}
+
+.tab-button.accent-gradient {
+  background: linear-gradient(135deg, var(--accent1) 0%, #00b5d8 100%);
+}
+
+.card-base {
+  background-color: var(--card-background);
+  padding: 28px;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.4),
+    0 2px 4px -1px rgba(0, 0, 0, 0.3);
+  width: 100%;
+  color: var(--text-primary);
+  transition: all 0.3s ease;
+}

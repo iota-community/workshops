@@ -44,6 +44,7 @@ export interface ButtonProps {
   onClick?: () => void;
   disabled?: boolean;
   style?: React.CSSProperties;
+  className?: string;
 }
 
 export interface TooltipProps {

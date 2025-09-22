@@ -3,13 +3,16 @@ import { forwardRef } from "react";
 import { ButtonProps } from "../../types";
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ children, onClick, disabled = false, style = {} }, ref) => {
+  (
+    { children, onClick, disabled = false, style = {}, className = "" },
+    ref,
+  ) => {
     return (
       <RadixButton
         ref={ref}
         radius="none"
+        className={className}
         style={{
-          background: disabled ? "#666" : "#0101ff",
           borderRadius: "8px",
           cursor: disabled ? "not-allowed" : "pointer",
           ...style,
