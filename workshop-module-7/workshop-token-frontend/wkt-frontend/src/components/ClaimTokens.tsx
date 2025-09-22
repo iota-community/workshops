@@ -39,7 +39,12 @@ export default function ClaimTokens() {
   };
 
   return (
-    <Flex direction="column" align="center" gap="6" style={{ padding: 20, minHeight: "100vh" }}>
+    <Flex
+      direction="column"
+      align="center"
+      gap="6"
+      style={{ padding: 20, minHeight: "100vh" }}
+    >
       <Card
         style={{
           padding: 32,
@@ -52,7 +57,12 @@ export default function ClaimTokens() {
         }}
         aria-live="polite"
       >
-        <Flex justify="center" align="center" gap="3" style={{ marginBottom: 24 }}>
+        <Flex
+          justify="center"
+          align="center"
+          gap="3"
+          style={{ marginBottom: 24 }}
+        >
           <FiCheckCircle size={36} color="#51cf66" />
           <Text size="7" weight="bold" style={{ color: "#51cf66", margin: 0 }}>
             Claim Daily Tokens
@@ -70,19 +80,27 @@ export default function ClaimTokens() {
             marginRight: "auto",
           }}
         >
-          Claim 10 Workshop Tokens (WKT) once every 24 hours. Use tokens for payments and redeeming badges.
+          Claim 10 Workshop Tokens (WKT) once every 24 hours. Use tokens for
+          payments and redeeming badges.
         </Text>
 
-        <Tooltip 
-          content={hasClaimed 
-            ? "You've already claimed tokens today. Come back tomorrow!" 
-            : "Claim 10 WKT tokens daily. Available once every 24 hours."}
+        <Tooltip
+          content={
+            hasClaimed
+              ? "You've already claimed tokens today. Come back tomorrow!"
+              : "Claim 10 WKT tokens daily. Available once every 24 hours."
+          }
         >
           <div>
             <Button
               onClick={handleClaim}
               disabled={loading || !account}
-              style={{ width: "100%", fontWeight: 600, fontSize: 18, padding: "14px 0" }}
+              style={{
+                width: "100%",
+                fontWeight: 600,
+                fontSize: 18,
+                padding: "14px 0",
+              }}
               aria-busy={loading}
               aria-disabled={loading || !account}
             >
@@ -93,10 +111,10 @@ export default function ClaimTokens() {
 
         {/* ==================== CORRECTED MESSAGE BLOCK ==================== */}
         {message && (
-          <Flex 
-            justify="center" 
-            align="center" 
-            gap="2" 
+          <Flex
+            justify="center"
+            align="center"
+            gap="2"
             style={{ marginTop: 20 }}
           >
             {message.includes("Successfully") ? (
@@ -104,10 +122,10 @@ export default function ClaimTokens() {
             ) : (
               <FiAlertCircle size={20} color="#f56565" />
             )}
-            <Text 
-              size="3" 
-              weight="medium" 
-              role="alert" 
+            <Text
+              size="3"
+              weight="medium"
+              role="alert"
               style={{
                 color: message.includes("Successfully") ? "#51cf66" : "#f56565",
               }}

@@ -1,12 +1,36 @@
-import { Flex, Card, Text, TextField, Box, Heading, Tabs } from "@radix-ui/themes";
+import {
+  Flex,
+  Card,
+  Text,
+  TextField,
+  Box,
+  Heading,
+  Tabs,
+} from "@radix-ui/themes";
 import { useWKTContract } from "../hooks/useWKTContract";
 import Button from "./molecules/Button";
 import { useState, useEffect } from "react";
-import { FiKey, FiGift, FiAward, FiSettings, FiUsers, FiXCircle, FiCheckCircle } from "react-icons/fi";
+import {
+  FiKey,
+  FiGift,
+  FiAward,
+  FiSettings,
+  FiUsers,
+  FiXCircle,
+  FiCheckCircle,
+} from "react-icons/fi";
 import Tooltip from "./molecules/Tooltip";
 
 export default function AdminPanel() {
-  const { account, addCouponCode, removeCouponCode, setAutoBadgeConfig, mintBadge, checkIsAdmin, getAvailableCoupons } = useWKTContract();
+  const {
+    account,
+    addCouponCode,
+    removeCouponCode,
+    setAutoBadgeConfig,
+    mintBadge,
+    checkIsAdmin,
+    getAvailableCoupons,
+  } = useWKTContract();
   const [isAdmin, setIsAdmin] = useState(false);
   const [couponCode, setCouponCode] = useState("");
   const [removeCode, setRemoveCode] = useState("");
@@ -36,14 +60,18 @@ export default function AdminPanel() {
 
   if (!isAdmin) {
     return (
-      <Flex justify="center" align="center" style={{ minHeight: "60vh", padding: "20px" }}>
+      <Flex
+        justify="center"
+        align="center"
+        style={{ minHeight: "60vh", padding: "20px" }}
+      >
         <Card
           style={{
             padding: "40px",
             background: "linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%)",
             maxWidth: "500px",
             textAlign: "center",
-            border: "1px solid #333"
+            border: "1px solid #333",
           }}
         >
           <FiKey size={48} color="#f56565" style={{ marginBottom: "16px" }} />
@@ -51,7 +79,8 @@ export default function AdminPanel() {
             Admin Access Required
           </Heading>
           <Text style={{ color: "#a0aec0" }}>
-            You don't have permission to view this page. Please contact the system administrator.
+            You don't have permission to view this page. Please contact the
+            system administrator.
           </Text>
         </Card>
       </Flex>
@@ -129,7 +158,7 @@ export default function AdminPanel() {
     borderRadius: "12px",
     border: "1px solid #333",
     boxShadow: "0 4px 20px rgba(0, 0, 0, 0.3)",
-    width: "100%"
+    width: "100%",
   };
 
   const inputStyle = {
@@ -139,11 +168,16 @@ export default function AdminPanel() {
     borderRadius: "8px",
     fontSize: "14px",
     width: "100%",
-    boxSizing: "border-box" as const
+    boxSizing: "border-box" as const,
   };
 
   return (
-    <Flex direction="column" align="center" gap="6" style={{ padding: "24px", minHeight: "100vh", width: "100%" }}>
+    <Flex
+      direction="column"
+      align="center"
+      gap="6"
+      style={{ padding: "24px", minHeight: "100vh", width: "100%" }}
+    >
       <Flex align="center" gap="3" style={{ marginBottom: "8px" }}>
         <FiSettings size={32} color="#805ad5" />
         <Heading
@@ -152,19 +186,32 @@ export default function AdminPanel() {
           style={{
             background: "linear-gradient(90deg, #805ad5, #0bc5ea)",
             WebkitBackgroundClip: "text",
-            WebkitTextFillColor: "transparent"
+            WebkitTextFillColor: "transparent",
           }}
         >
           Admin Dashboard
         </Heading>
       </Flex>
 
-      <Text size="4" style={{ color: "#a0aec0", marginBottom: "32px", textAlign: "center" }}>
+      <Text
+        size="4"
+        style={{ color: "#a0aec0", marginBottom: "32px", textAlign: "center" }}
+      >
         Manage coupons, badge configurations, and mint new badges
       </Text>
 
-      <Tabs.Root defaultValue="coupons" style={{ width: "100%", maxWidth: "800px" }}>
-        <Tabs.List style={{ display: "flex", gap: "16px", justifyContent: "center", marginBottom: "32px" }}>
+      <Tabs.Root
+        defaultValue="coupons"
+        style={{ width: "100%", maxWidth: "800px" }}
+      >
+        <Tabs.List
+          style={{
+            display: "flex",
+            gap: "16px",
+            justifyContent: "center",
+            marginBottom: "32px",
+          }}
+        >
           <Tabs.Trigger value="coupons">
             <FiGift size={18} style={{ marginRight: "8px" }} />
             Coupons
@@ -184,12 +231,16 @@ export default function AdminPanel() {
           <Card style={cardStyle}>
             <Flex align="center" gap="3" style={{ marginBottom: "24px" }}>
               <FiGift size={24} color="#0bc5ea" />
-              <Heading size="5" style={{ color: "#e2e8f0" }}>Coupon Management</Heading>
+              <Heading size="5" style={{ color: "#e2e8f0" }}>
+                Coupon Management
+              </Heading>
             </Flex>
 
             <Flex direction="column" gap="4">
               <Box>
-                <Text size="2" weight="medium" style={{ color: "#a0aec0" }}>Add New Coupon</Text>
+                <Text size="2" weight="medium" style={{ color: "#a0aec0" }}>
+                  Add New Coupon
+                </Text>
                 <TextField.Root
                   placeholder="Enter coupon code..."
                   value={couponCode}
@@ -197,7 +248,11 @@ export default function AdminPanel() {
                   style={inputStyle}
                 />
                 <Tooltip content="Add a new coupon code for users to redeem">
-                  <Button onClick={handleAddCoupon} disabled={loading || !couponCode} style={{ width: "100%", marginTop: "8px" }}>
+                  <Button
+                    onClick={handleAddCoupon}
+                    disabled={loading || !couponCode}
+                    style={{ width: "100%", marginTop: "8px" }}
+                  >
                     <FiCheckCircle style={{ marginRight: "8px" }} />
                     Add Coupon
                   </Button>
@@ -205,7 +260,9 @@ export default function AdminPanel() {
               </Box>
 
               <Box>
-                <Text size="2" weight="medium" style={{ color: "#a0aec0" }}>Remove Coupon</Text>
+                <Text size="2" weight="medium" style={{ color: "#a0aec0" }}>
+                  Remove Coupon
+                </Text>
                 <TextField.Root
                   placeholder="Enter coupon code to remove..."
                   value={removeCode}
@@ -213,7 +270,11 @@ export default function AdminPanel() {
                   style={inputStyle}
                 />
                 <Tooltip content="Remove an existing coupon code">
-                  <Button onClick={handleRemoveCoupon} disabled={loading || !removeCode} style={{ width: "100%", marginTop: "8px" }}>
+                  <Button
+                    onClick={handleRemoveCoupon}
+                    disabled={loading || !removeCode}
+                    style={{ width: "100%", marginTop: "8px" }}
+                  >
                     <FiXCircle style={{ marginRight: "8px" }} />
                     Remove Coupon
                   </Button>
@@ -221,20 +282,49 @@ export default function AdminPanel() {
               </Box>
 
               <Box>
-                <Text size="2" weight="medium" style={{ color: "#a0aec0" }}>Active Coupons ({coupons.length})</Text>
+                <Text size="2" weight="medium" style={{ color: "#a0aec0" }}>
+                  Active Coupons ({coupons.length})
+                </Text>
                 {coupons.length > 0 ? (
-                  <Flex direction="column" gap="2" style={{ maxHeight: "200px", overflowY: "auto" }}>
+                  <Flex
+                    direction="column"
+                    gap="2"
+                    style={{ maxHeight: "200px", overflowY: "auto" }}
+                  >
                     {coupons.map((code) => (
-                      <Card key={code} style={{ background: "#2a2a2a", padding: "12px", borderRadius: "8px", border: "1px solid #333" }}>
+                      <Card
+                        key={code}
+                        style={{
+                          background: "#2a2a2a",
+                          padding: "12px",
+                          borderRadius: "8px",
+                          border: "1px solid #333",
+                        }}
+                      >
                         <Flex justify="between" align="center">
-                          <Text size="2" style={{ fontFamily: "monospace", color: "#e2e8f0" }}>{code}</Text>
-                          <Text size="1" style={{ color: "#48bb78" }}>Active</Text>
+                          <Text
+                            size="2"
+                            style={{
+                              fontFamily: "monospace",
+                              color: "#e2e8f0",
+                            }}
+                          >
+                            {code}
+                          </Text>
+                          <Text size="1" style={{ color: "#48bb78" }}>
+                            Active
+                          </Text>
                         </Flex>
                       </Card>
                     ))}
                   </Flex>
                 ) : (
-                  <Text size="2" style={{ color: "#718096", fontStyle: "italic" }}>No active coupons</Text>
+                  <Text
+                    size="2"
+                    style={{ color: "#718096", fontStyle: "italic" }}
+                  >
+                    No active coupons
+                  </Text>
                 )}
               </Box>
             </Flex>
@@ -246,11 +336,15 @@ export default function AdminPanel() {
           <Card style={cardStyle}>
             <Flex align="center" gap="3" style={{ marginBottom: "24px" }}>
               <FiAward size={24} color="#48bb78" />
-              <Heading size="5" style={{ color: "#e2e8f0" }}>Auto Badge Configuration</Heading>
+              <Heading size="5" style={{ color: "#e2e8f0" }}>
+                Auto Badge Configuration
+              </Heading>
             </Flex>
             <Flex direction="column" gap="4">
               <Box>
-                <Text size="2" weight="medium" style={{ color: "#a0aec0" }}>Workshop ID</Text>
+                <Text size="2" weight="medium" style={{ color: "#a0aec0" }}>
+                  Workshop ID
+                </Text>
                 <TextField.Root
                   placeholder="Enter workshop ID..."
                   value={workshopId}
@@ -259,7 +353,9 @@ export default function AdminPanel() {
                 />
               </Box>
               <Box>
-                <Text size="2" weight="medium" style={{ color: "#a0aec0" }}>Badge Image URL</Text>
+                <Text size="2" weight="medium" style={{ color: "#a0aec0" }}>
+                  Badge Image URL
+                </Text>
                 <TextField.Root
                   placeholder="Enter badge image URL..."
                   value={badgeUrl}
@@ -268,7 +364,11 @@ export default function AdminPanel() {
                 />
               </Box>
               <Tooltip content="Configure automatic badge creation for payments">
-                <Button onClick={handleSetAutoBadge} disabled={loading || !workshopId || !badgeUrl} style={{ width: "100%", marginTop: "8px" }}>
+                <Button
+                  onClick={handleSetAutoBadge}
+                  disabled={loading || !workshopId || !badgeUrl}
+                  style={{ width: "100%", marginTop: "8px" }}
+                >
                   <FiSettings style={{ marginRight: "8px" }} />
                   Set Auto Badge Config
                 </Button>
@@ -282,11 +382,15 @@ export default function AdminPanel() {
           <Card style={cardStyle}>
             <Flex align="center" gap="3" style={{ marginBottom: "24px" }}>
               <FiUsers size={24} color="#805ad5" />
-              <Heading size="5" style={{ color: "#e2e8f0" }}>Mint Badge</Heading>
+              <Heading size="5" style={{ color: "#e2e8f0" }}>
+                Mint Badge
+              </Heading>
             </Flex>
             <Flex direction="column" gap="4">
               <Box>
-                <Text size="2" weight="medium" style={{ color: "#a0aec0" }}>Recipient Address</Text>
+                <Text size="2" weight="medium" style={{ color: "#a0aec0" }}>
+                  Recipient Address
+                </Text>
                 <TextField.Root
                   placeholder="Enter recipient address..."
                   value={mintRecipient}
@@ -295,7 +399,9 @@ export default function AdminPanel() {
                 />
               </Box>
               <Box>
-                <Text size="2" weight="medium" style={{ color: "#a0aec0" }}>Workshop ID</Text>
+                <Text size="2" weight="medium" style={{ color: "#a0aec0" }}>
+                  Workshop ID
+                </Text>
                 <TextField.Root
                   placeholder="Enter workshop ID..."
                   value={mintWorkshopId}
@@ -304,7 +410,9 @@ export default function AdminPanel() {
                 />
               </Box>
               <Box>
-                <Text size="2" weight="medium" style={{ color: "#a0aec0" }}>Badge Image URL</Text>
+                <Text size="2" weight="medium" style={{ color: "#a0aec0" }}>
+                  Badge Image URL
+                </Text>
                 <TextField.Root
                   placeholder="Enter badge image URL..."
                   value={mintUrl}
@@ -313,7 +421,13 @@ export default function AdminPanel() {
                 />
               </Box>
               <Tooltip content="Manually mint a badge for a specific user">
-                <Button onClick={handleMintBadge} disabled={loading || !mintRecipient || !mintWorkshopId || !mintUrl} style={{ width: "100%", marginTop: "8px" }}>
+                <Button
+                  onClick={handleMintBadge}
+                  disabled={
+                    loading || !mintRecipient || !mintWorkshopId || !mintUrl
+                  }
+                  style={{ width: "100%", marginTop: "8px" }}
+                >
                   <FiAward style={{ marginRight: "8px" }} />
                   Mint Badge
                 </Button>
@@ -329,7 +443,7 @@ export default function AdminPanel() {
             ...cardStyle,
             borderColor: message.includes("❌") ? "#f56565" : "#48bb78",
             maxWidth: "600px",
-            marginTop: "24px"
+            marginTop: "24px",
           }}
         >
           <Flex align="center" gap="3">
@@ -338,7 +452,10 @@ export default function AdminPanel() {
             ) : (
               <FiCheckCircle size={20} color="#48bb78" />
             )}
-            <Text color={message.includes("❌") ? "red" : "green"} weight="medium">
+            <Text
+              color={message.includes("❌") ? "red" : "green"}
+              weight="medium"
+            >
               {message}
             </Text>
           </Flex>

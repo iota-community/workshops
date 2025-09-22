@@ -4,11 +4,17 @@ import { useWKTContract } from "../hooks/useWKTContract";
 import Button from "./molecules/Button";
 import { WorkshopBadge } from "../types";
 import { Link } from "react-router-dom";
-import { FiShield, FiArrowLeft, FiCheckCircle, FiAlertCircle } from "react-icons/fi";
+import {
+  FiShield,
+  FiArrowLeft,
+  FiCheckCircle,
+  FiAlertCircle,
+} from "react-icons/fi";
 import Tooltip from "./molecules/Tooltip";
 
 export default function RedeemBadge() {
-  const { account, redeemBadge, getWorkshopBadges, checkHasRedeemedBadge } = useWKTContract();
+  const { account, redeemBadge, getWorkshopBadges, checkHasRedeemedBadge } =
+    useWKTContract();
   const [badges, setBadges] = useState<WorkshopBadge[]>([]);
   const [selectedBadge, setSelectedBadge] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
@@ -59,13 +65,33 @@ export default function RedeemBadge() {
   if (hasRedeemed) {
     return (
       <Flex direction="column" align="center" gap="6" style={{ padding: 20 }}>
-        <Card style={{ padding: 24, background: "#1a1a1a", maxWidth: 420, textAlign: "center", borderRadius: 12 }}>
-          <FiCheckCircle size={48} color="#48bb78" style={{ marginBottom: 12 }} />
-          <Text size="5" weight="bold" style={{ marginBottom: 16,display: "block" }}>
+        <Card
+          style={{
+            padding: 24,
+            background: "#1a1a1a",
+            maxWidth: 420,
+            textAlign: "center",
+            borderRadius: 12,
+          }}
+        >
+          <FiCheckCircle
+            size={48}
+            color="#48bb78"
+            style={{ marginBottom: 12 }}
+          />
+          <Text
+            size="5"
+            weight="bold"
+            style={{ marginBottom: 16, display: "block" }}
+          >
             You have already redeemed a badge.
           </Text>
-          <Text size="4" style={{ marginBottom: 20, color: "#a0aec0",display: "block" }}>
-            Each badge can only be redeemed once. Continue exploring your badge gallery or dashboard.
+          <Text
+            size="4"
+            style={{ marginBottom: 20, color: "#a0aec0", display: "block" }}
+          >
+            Each badge can only be redeemed once. Continue exploring your badge
+            gallery or dashboard.
           </Text>
           <Link to="/">
             <Button style={{ width: "100%", fontWeight: "600" }}>
@@ -80,13 +106,33 @@ export default function RedeemBadge() {
   if (!badges.length) {
     return (
       <Flex direction="column" align="center" gap="6" style={{ padding: 20 }}>
-        <Card style={{ padding: 24, background: "#1a1a1a", maxWidth: 420, textAlign: "center", borderRadius: 12 }}>
-          <FiAlertCircle size={48} color="#f56565" style={{ marginBottom: 12 }} />
-          <Text size="5" weight="bold" style={{ marginBottom: 16,display: "block", }}>
+        <Card
+          style={{
+            padding: 24,
+            background: "#1a1a1a",
+            maxWidth: 420,
+            textAlign: "center",
+            borderRadius: 12,
+          }}
+        >
+          <FiAlertCircle
+            size={48}
+            color="#f56565"
+            style={{ marginBottom: 12 }}
+          />
+          <Text
+            size="5"
+            weight="bold"
+            style={{ marginBottom: 16, display: "block" }}
+          >
             No Badges to Redeem
           </Text>
-          <Text size="4" style={{ marginBottom: 20, color: "#a0aec0",display: "block" }}>
-            You currently do not own any workshop badges. Earn badges by participating in workshops to redeem tokens.
+          <Text
+            size="4"
+            style={{ marginBottom: 20, color: "#a0aec0", display: "block" }}
+          >
+            You currently do not own any workshop badges. Earn badges by
+            participating in workshops to redeem tokens.
           </Text>
           <Link to="/">
             <Button style={{ width: "100%", fontWeight: "600" }}>
@@ -100,7 +146,15 @@ export default function RedeemBadge() {
 
   return (
     <Flex direction="column" align="center" gap="6" style={{ padding: 20 }}>
-      <Card style={{ padding: 24, background: "#1a1a1a", minWidth: 320, maxWidth: 460, borderRadius: 12 }}>
+      <Card
+        style={{
+          padding: 24,
+          background: "#1a1a1a",
+          minWidth: 320,
+          maxWidth: 460,
+          borderRadius: 12,
+        }}
+      >
         <Flex align="center" gap="12" style={{ marginBottom: 20 }}>
           <FiShield size={32} color="#805ad5" />
           <Text size="6" weight="bold" style={{ color: "#e2e8f0" }}>
@@ -108,8 +162,12 @@ export default function RedeemBadge() {
           </Text>
         </Flex>
 
-        <Text size="4" style={{ marginBottom: 24, color: "#a0aec0", lineHeight: 1.5 }}>
-          Select one of your earned workshop badges from the dropdown and redeem it for 30 WKT tokens. Each badge can only be redeemed once.
+        <Text
+          size="4"
+          style={{ marginBottom: 24, color: "#a0aec0", lineHeight: 1.5 }}
+        >
+          Select one of your earned workshop badges from the dropdown and redeem
+          it for 30 WKT tokens. Each badge can only be redeemed once.
         </Text>
 
         <select
@@ -132,28 +190,30 @@ export default function RedeemBadge() {
           <option value="">-- Select a badge to redeem --</option>
           {badges.map((badge) => (
             <option key={badge.id} value={badge.id}>
-              Badge ID: {badge.workshop_id} 
+              Badge ID: {badge.workshop_id}
             </option>
           ))}
         </select>
 
-        <Tooltip 
-  content={badges.length === 0 
-    ? "You don't have any badges to redeem. Participate in workshops to earn badges" 
-    : "Redeem a workshop badge for 30 WKT tokens"}
->
-  <div>
-  <Button
-    onClick={handleRedeem}
-    disabled={loading || !account || !selectedBadge}
-    style={{ width: "100%", fontWeight: "600" }}
-    aria-busy={loading}
-    aria-disabled={loading || !account || !selectedBadge}
-  >
-    {loading ? "Redeeming..." : "Redeem for 30 WKT"}
-  </Button>
-  </div>
-</Tooltip>
+        <Tooltip
+          content={
+            badges.length === 0
+              ? "You don't have any badges to redeem. Participate in workshops to earn badges"
+              : "Redeem a workshop badge for 30 WKT tokens"
+          }
+        >
+          <div>
+            <Button
+              onClick={handleRedeem}
+              disabled={loading || !account || !selectedBadge}
+              style={{ width: "100%", fontWeight: "600" }}
+              aria-busy={loading}
+              aria-disabled={loading || !account || !selectedBadge}
+            >
+              {loading ? "Redeeming..." : "Redeem for 30 WKT"}
+            </Button>
+          </div>
+        </Tooltip>
 
         {message && (
           <Text

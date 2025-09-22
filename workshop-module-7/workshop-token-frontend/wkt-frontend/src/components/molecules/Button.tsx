@@ -14,11 +14,11 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       <RadixButton
         ref={ref}
         radius="none"
-        style={{ 
-          background: disabled ? "#666" : "#0101ff", 
-          borderRadius: "8px", 
-          cursor: disabled ? "not-allowed" : "pointer", 
-          ...style 
+        style={{
+          background: disabled ? "#666" : "#0101ff",
+          borderRadius: "8px",
+          cursor: disabled ? "not-allowed" : "pointer",
+          ...style,
         }}
         onClick={onClick}
         disabled={disabled}
@@ -26,7 +26,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         {children}
       </RadixButton>
     );
-  }
+  },
 );
 
 Button.displayName = "Button";

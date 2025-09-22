@@ -6,16 +6,18 @@ const { networkConfig, useNetworkVariable } = createNetworkConfig({
     url: getFullnodeUrl("devnet"),
     variables: {
       packageId: "",
-      faucetObject: ""
-    }
+      faucetObject: "",
+    },
   },
   testnet: {
     url: getFullnodeUrl("testnet"),
     variables: {
-      packageId: "0x8effd4f141f4ef8692450e25fddc771a031c5645770b507de2e4eee7cb20a3bd",
-      faucetObject: "0x8718a993b6291dee7908cff22848477b7de2401e70875c225d19cf3ce70be88b"
-    }
-  }
+      packageId:
+        "0x8effd4f141f4ef8692450e25fddc771a031c5645770b507de2e4eee7cb20a3bd",
+      faucetObject:
+        "0x8718a993b6291dee7908cff22848477b7de2401e70875c225d19cf3ce70be88b",
+    },
+  },
 });
 
 export { useNetworkVariable, networkConfig };

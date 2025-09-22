@@ -20,18 +20,18 @@ export default function Loading() {
       <Flex
         align="center"
         justify="center"
-        style={{ 
-          minHeight: "200px", 
-          padding: "40px", 
+        style={{
+          minHeight: "200px",
+          padding: "40px",
         }}
         role="status"
         aria-live="polite"
       >
-        <Card style={{ background: 'var(--gray-a2)', padding: '32px' }}>
+        <Card style={{ background: "var(--gray-a2)", padding: "32px" }}>
           <Flex direction="column" align="center" gap="4">
-            <FiHexagon 
-              size={48} 
-              color="var(--accent-9)" 
+            <FiHexagon
+              size={48}
+              color="var(--accent-9)"
               style={{
                 animation: "pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite",
               }}

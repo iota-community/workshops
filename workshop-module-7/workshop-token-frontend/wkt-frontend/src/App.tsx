@@ -29,13 +29,12 @@ function App() {
   }, [account?.address, checkIsAdmin]);
 
   const navLinkStyle = {
-    textDecoration: 'none',
-    transition: 'color 0.2s ease-in-out',
+    textDecoration: "none",
+    transition: "color 0.2s ease-in-out",
   };
 
   return (
     <Box>
-     
       <Flex
         as="div"
         position="sticky"
@@ -60,19 +59,23 @@ function App() {
               </Heading>
             </Flex>
           </Link>
-          
+
           {isAdmin && (
             <Link to="/admin" style={navLinkStyle}>
-              <Text 
+              <Text
                 weight="bold"
                 className="nav-link"
                 style={{
-                  color: 'var(--gray-11)',
-                  padding: '8px 12px',
-                  borderRadius: 'var(--radius-3)',
+                  color: "var(--gray-11)",
+                  padding: "8px 12px",
+                  borderRadius: "var(--radius-3)",
                 }}
-                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--accent-a3)'}
-                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
+                onMouseEnter={(e) =>
+                  (e.currentTarget.style.backgroundColor = "var(--accent-a3)")
+                }
+                onMouseLeave={(e) =>
+                  (e.currentTarget.style.backgroundColor = "transparent")
+                }
               >
                 Admin Panel
               </Text>

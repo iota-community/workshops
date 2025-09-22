@@ -3,7 +3,12 @@ import { Flex, Card, Text, Box } from "@radix-ui/themes";
 import { useWKTContract } from "../hooks/useWKTContract";
 import Button from "./molecules/Button";
 import { Link } from "react-router-dom";
-import { FiGift, FiAlertCircle, FiArrowLeft, FiCheckCircle } from "react-icons/fi";
+import {
+  FiGift,
+  FiAlertCircle,
+  FiArrowLeft,
+  FiCheckCircle,
+} from "react-icons/fi";
 import Tooltip from "./molecules/Tooltip";
 
 export default function ClaimCoupon() {
@@ -37,7 +42,12 @@ export default function ClaimCoupon() {
   };
 
   return (
-    <Flex direction="column" align="center" gap="6" style={{ padding: 24, minHeight: "100vh" }}>
+    <Flex
+      direction="column"
+      align="center"
+      gap="6"
+      style={{ padding: 24, minHeight: "100vh" }}
+    >
       <Card
         style={{
           padding: 32,
@@ -50,7 +60,12 @@ export default function ClaimCoupon() {
         }}
         aria-live="polite"
       >
-        <Flex justify="center" align="center" gap="12" style={{ marginBottom: 24 }}>
+        <Flex
+          justify="center"
+          align="center"
+          gap="12"
+          style={{ marginBottom: 24 }}
+        >
           <FiGift size={32} color="#805ad5" />
           <Text size="7" weight="bold" style={{ color: "#805ad5", margin: 0 }}>
             Claim with Coupon
@@ -68,7 +83,8 @@ export default function ClaimCoupon() {
             marginRight: "auto",
           }}
         >
-          Enter a valid coupon code to claim 10 WKT tokens. Each coupon can only be used once per user.
+          Enter a valid coupon code to claim 10 WKT tokens. Each coupon can only
+          be used once per user.
         </Text>
 
         <input
@@ -93,15 +109,20 @@ export default function ClaimCoupon() {
 
         <Tooltip content="Redeem a coupon code to claim additional WKT tokens">
           <div>
-          <Button
-            onClick={handleClaim}
-            disabled={loading || !account || !couponCode}
-            style={{ width: "100%", fontWeight: 600, fontSize: 18, padding: "14px 0" }}
-            aria-busy={loading}
-            aria-disabled={loading || !account || !couponCode}
-          >
-            {loading ? "Claiming..." : "Claim with Coupon"}
-          </Button>
+            <Button
+              onClick={handleClaim}
+              disabled={loading || !account || !couponCode}
+              style={{
+                width: "100%",
+                fontWeight: 600,
+                fontSize: 18,
+                padding: "14px 0",
+              }}
+              aria-busy={loading}
+              aria-disabled={loading || !account || !couponCode}
+            >
+              {loading ? "Claiming..." : "Claim with Coupon"}
+            </Button>
           </div>
         </Tooltip>
 
@@ -121,7 +142,9 @@ export default function ClaimCoupon() {
             )}
             <Text
               size="4"
-              color={message.toLowerCase().includes("success") ? "green" : "red"}
+              color={
+                message.toLowerCase().includes("success") ? "green" : "red"
+              }
               weight="medium"
               style={{ margin: 0 }}
             >
@@ -134,21 +157,21 @@ export default function ClaimCoupon() {
           <Link to="/" style={{ textDecoration: "none" }}>
             <Tooltip content="Return to the main dashboard">
               <div>
-              <Button
-                style={{
-                  width: 180,
-                  fontWeight: 600,
-                  fontSize: 16,
-                  padding: "12px 0",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  gap: 8,
-                }}
-              >
-                <FiArrowLeft size={20} />
-                Back to Dashboard
-              </Button>
+                <Button
+                  style={{
+                    width: 180,
+                    fontWeight: 600,
+                    fontSize: 16,
+                    padding: "12px 0",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    gap: 8,
+                  }}
+                >
+                  <FiArrowLeft size={20} />
+                  Back to Dashboard
+                </Button>
               </div>
             </Tooltip>
           </Link>

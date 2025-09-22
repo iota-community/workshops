@@ -31,7 +31,11 @@ const useWindowSize = () => {
   return windowSize;
 };
 
-export default function CelebrationModal({ isOpen, onClose, badge }: CelebrationModalProps) {
+export default function CelebrationModal({
+  isOpen,
+  onClose,
+  badge,
+}: CelebrationModalProps) {
   const { width, height } = useWindowSize();
 
   if (!isOpen || !badge) return null;
@@ -51,7 +55,12 @@ export default function CelebrationModal({ isOpen, onClose, badge }: Celebration
         zIndex: 1000,
       }}
     >
-      <Confetti width={width} height={height} recycle={false} numberOfPieces={300} />
+      <Confetti
+        width={width}
+        height={height}
+        recycle={false}
+        numberOfPieces={300}
+      />
       <Card
         style={{
           padding: 32,
@@ -70,15 +79,30 @@ export default function CelebrationModal({ isOpen, onClose, badge }: Celebration
           <Text size="4" style={{ color: "#a0aec0" }}>
             You've earned a new NFT Badge for making your first transaction!
           </Text>
-          
+
           {/* Display the new badge */}
-          <Box style={{ padding: '16px', background: '#2d3748', borderRadius: '8px', marginTop: '16px' }}>
-            <img 
-              src={badge.url} 
-              alt={badge.workshop_id} 
-              style={{ width: 150, height: 150, objectFit: 'cover', borderRadius: '8px' }} 
+          <Box
+            style={{
+              padding: "16px",
+              background: "#2d3748",
+              borderRadius: "8px",
+              marginTop: "16px",
+            }}
+          >
+            <img
+              src={badge.url}
+              alt={badge.workshop_id}
+              style={{
+                width: 150,
+                height: 150,
+                objectFit: "cover",
+                borderRadius: "8px",
+              }}
             />
-            <Text weight="bold" style={{ color: 'white', marginTop: '8px', display: 'block' }}>
+            <Text
+              weight="bold"
+              style={{ color: "white", marginTop: "8px", display: "block" }}
+            >
               Workshop Badge #{badge.workshop_id}
             </Text>
           </Box>

@@ -55,7 +55,7 @@ export default function Home() {
 
   const totalBalance = balance.reduce(
     (sum, coin) => sum + BigInt(coin.balance),
-    BigInt(0)
+    BigInt(0),
   );
 
   if (!account) {
@@ -65,14 +65,14 @@ export default function Home() {
         align="center"
         pt="6"
         gap="8"
-        style={{ 
-          maxWidth: 800, 
-          margin: "auto", 
+        style={{
+          maxWidth: 800,
+          margin: "auto",
           padding: "0 16px 40px",
-          minHeight: "100vh"
+          minHeight: "100vh",
         }}
       >
-        <DashboardSummary 
+        <DashboardSummary
           account={null}
           totalBalance={BigInt(0)}
           badges={[]}
@@ -89,21 +89,21 @@ export default function Home() {
       align="center"
       pt="6"
       gap="8"
-      style={{ 
-        maxWidth: 800, 
-        margin: "auto", 
+      style={{
+        maxWidth: 800,
+        margin: "auto",
         padding: "0 16px 40px",
-        minHeight: "100vh"
+        minHeight: "100vh",
       }}
     >
-      <DashboardSummary 
+      <DashboardSummary
         account={account}
         totalBalance={totalBalance}
         badges={badges}
         hasClaimed={hasClaimed}
         hasRedeemed={hasRedeemed}
       />
-      
+
       <ActionTabs
         selectedTab={selectedTab}
         setSelectedTab={setSelectedTab}
@@ -112,7 +112,7 @@ export default function Home() {
         totalBalance={totalBalance}
         badges={badges}
       />
-      
+
       <OwnedObjects />
     </Flex>
   );

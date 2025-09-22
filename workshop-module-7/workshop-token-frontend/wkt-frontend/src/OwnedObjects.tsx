@@ -6,7 +6,6 @@ import Loading from "./components/molecules/Loading";
 import { FiDollarSign, FiAward, FiCalendar, FiHash } from "react-icons/fi";
 import { Link } from "react-router-dom";
 
-
 // Color scheme matching the dark theme
 const colors = {
   primary: "#805ad5",
@@ -43,15 +42,26 @@ export default function OwnedObjects() {
     return <Loading />;
   }
 
-  const totalBalance = balances.reduce((sum, coin) => sum + BigInt(coin.balance), BigInt(0));
+  const totalBalance = balances.reduce(
+    (sum, coin) => sum + BigInt(coin.balance),
+    BigInt(0),
+  );
 
   return (
-    <Flex direction="column" gap="5" style={{ width: "100%", maxWidth: 800, marginTop: 40 }}>
+    <Flex
+      direction="column"
+      gap="5"
+      style={{ width: "100%", maxWidth: 800, marginTop: 40 }}
+    >
       {/* Header */}
-      <Text size="6" weight="bold" style={{ color: colors.textPrimary, marginBottom: 8 }}>
+      <Text
+        size="6"
+        weight="bold"
+        style={{ color: colors.textPrimary, marginBottom: 8 }}
+      >
         Your Assets
       </Text>
-      
+
       {/* Token Summary Card */}
       <Card
         style={{
@@ -68,7 +78,7 @@ export default function OwnedObjects() {
             WKT Tokens
           </Text>
         </Flex>
-        
+
         <Flex align="center" gap="3" style={{ marginBottom: 16 }}>
           <Text size="6" weight="bold" style={{ color: colors.primary }}>
             {totalBalance.toString()}
@@ -102,87 +112,109 @@ export default function OwnedObjects() {
         {badges.length > 0 ? (
           <Flex wrap="wrap" gap="4">
             {badges.map((badge) => (
+              <Link
+                to="/redeem-badge"
+                key={badge.id}
+                style={{
+                  textDecoration: "none",
+                  width: "calc(50% - 8px)",
+                  minWidth: 240,
+                }}
+              >
+                <Card
+                  style={{
+                    padding: 16,
+                    background: "#1a202c",
+                    borderRadius: 12,
+                    border: `1px solid ${colors.border}`,
+                    width: "100%",
+                    transition: "transform 0.2s ease, box-shadow 0.2s ease", // Enhanced transition
+                    cursor: "pointer",
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = "translateY(-4px)";
+                    e.currentTarget.style.boxShadow =
+                      "0 8px 16px rgba(0, 0, 0, 0.4)";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = "translateY(0)";
+                    e.currentTarget.style.boxShadow = "none";
+                  }}
+                >
+                  <Flex direction="column" gap="3">
+                    {badge.url ? (
+                      <img
+                        src={badge.url}
+                        alt={badge.workshop_id}
+                        style={{
+                          width: "100%",
+                          height: 120,
+                          objectFit: "cover",
+                          borderRadius: 8,
+                        }}
+                      />
+                    ) : (
+                      <Box
+                        style={{
+                          width: "100%",
+                          height: 120,
+                          backgroundColor: colors.border,
+                          borderRadius: 8,
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
+                      >
+                        <FiAward size={32} color={colors.textSecondary} />
+                      </Box>
+                    )}
 
-              <Link to="/redeem-badge" key={badge.id} style={{ textDecoration: 'none', width: "calc(50% - 8px)", minWidth: 240 }}>
-  <Card
-    style={{
-      padding: 16,
-      background: "#1a202c",
-      borderRadius: 12,
-      border: `1px solid ${colors.border}`,
-      width: '100%',
-      transition: "transform 0.2s ease, box-shadow 0.2s ease", // Enhanced transition
-      cursor: 'pointer',
-    }}
-    onMouseEnter={(e) => {
-      e.currentTarget.style.transform = 'translateY(-4px)';
-      e.currentTarget.style.boxShadow = '0 8px 16px rgba(0, 0, 0, 0.4)';
-    }}
-    onMouseLeave={(e) => {
-      e.currentTarget.style.transform = 'translateY(0)';
-      e.currentTarget.style.boxShadow = 'none';
-    }}
-  >
-                <Flex direction="column" gap="3">
-                  {badge.url ? (
-                    <img
-                      src={badge.url}
-                      alt={badge.workshop_id}
-                      style={{
-                        width: "100%",
-                        height: 120,
-                        objectFit: "cover",
-                        borderRadius: 8,
-                      }}
-                    />
-                  ) : (
-                    <Box
-                      style={{
-                        width: "100%",
-                        height: 120,
-                        backgroundColor: colors.border,
-                        borderRadius: 8,
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center"
-                      }}
-                    >
-                      <FiAward size={32} color={colors.textSecondary} />
-                    </Box>
-                  )}
-                  
-                  <Flex direction="column" gap="2">
-                    <Flex align="center" gap="2">
-                      <FiHash size={14} color={colors.textSecondary} />
-                      <Text size="2" weight="medium" style={{ color: colors.textPrimary }}>
-                        Workshop #{badge.workshop_id}
-                      </Text>
-                    </Flex>
-                    
-                    <Flex align="center" gap="2">
-                      <FiCalendar size={14} color={colors.textSecondary} />
-                      <Text size="1" style={{ color: colors.textSecondary }}>
-                        {new Date(parseInt(badge.minted_at)).toLocaleDateString()}
-                      </Text>
+                    <Flex direction="column" gap="2">
+                      <Flex align="center" gap="2">
+                        <FiHash size={14} color={colors.textSecondary} />
+                        <Text
+                          size="2"
+                          weight="medium"
+                          style={{ color: colors.textPrimary }}
+                        >
+                          Workshop #{badge.workshop_id}
+                        </Text>
+                      </Flex>
+
+                      <Flex align="center" gap="2">
+                        <FiCalendar size={14} color={colors.textSecondary} />
+                        <Text size="1" style={{ color: colors.textSecondary }}>
+                          {new Date(
+                            parseInt(badge.minted_at),
+                          ).toLocaleDateString()}
+                        </Text>
+                      </Flex>
                     </Flex>
                   </Flex>
-                </Flex>
-              </Card>
-</Link>
+                </Card>
+              </Link>
             ))}
           </Flex>
         ) : (
-          <Flex direction="column" align="center" gap="3" style={{ padding: "20px 0" }}>
+          <Flex
+            direction="column"
+            align="center"
+            gap="3"
+            style={{ padding: "20px 0" }}
+          >
             <Box
               style={{
                 padding: 16,
                 background: "rgba(160, 174, 192, 0.1)",
-                borderRadius: 12
+                borderRadius: 12,
               }}
             >
               <FiAward size={24} color={colors.textSecondary} />
             </Box>
-            <Text size="2" style={{ color: colors.textSecondary, textAlign: "center" }}>
+            <Text
+              size="2"
+              style={{ color: colors.textSecondary, textAlign: "center" }}
+            >
               No workshop badges yet. Participate in workshops to earn badges!
             </Text>
           </Flex>
