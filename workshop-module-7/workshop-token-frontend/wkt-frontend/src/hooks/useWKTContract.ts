@@ -58,8 +58,6 @@ export const useWKTContract = () => {
         sender: address,
       });
 
-      console.log("view_claim_status simulation result:", result);
-
       if (result.events && result.events.length > 0) {
         const claimStatusEvent = result.events.find((e) =>
           e.type.endsWith("::wkt::ClaimStatus"),
@@ -68,7 +66,6 @@ export const useWKTContract = () => {
         if (claimStatusEvent) {
           const hasClaimed =
             (claimStatusEvent.parsedJson as any)?.has_claimed_today || false;
-          console.log("User has claimed today (from event):", hasClaimed);
           return hasClaimed;
         }
       }
@@ -240,7 +237,6 @@ export const useWKTContract = () => {
         { transaction: tx },
         {
           onSuccess: (result) => {
-            console.log("Tokens claimed successfully", result);
             resolve(result);
           },
           onError: (error) => {
@@ -270,7 +266,6 @@ export const useWKTContract = () => {
         { transaction: tx },
         {
           onSuccess: (result) => {
-            console.log("Claimed with coupon successfully", result);
             resolve(result);
           },
           onError: (error) => {
@@ -305,7 +300,6 @@ export const useWKTContract = () => {
         { transaction: tx },
         {
           onSuccess: (result) => {
-            console.log("Payment made successfully", result);
             resolve(result);
           },
           onError: (error) => {
@@ -335,7 +329,6 @@ export const useWKTContract = () => {
         { transaction: tx },
         {
           onSuccess: (result) => {
-            console.log("Badge redeemed successfully", result);
             resolve(result);
           },
           onError: (error) => {
@@ -365,7 +358,6 @@ export const useWKTContract = () => {
         { transaction: tx },
         {
           onSuccess: (result) => {
-            console.log("Coupon code added successfully", result);
             resolve(result);
           },
           onError: (error) => {
@@ -394,7 +386,6 @@ export const useWKTContract = () => {
         { transaction: tx },
         {
           onSuccess: (result) => {
-            console.log("Coupon code removed successfully", result);
             resolve(result);
           },
           onError: (error) => {
@@ -427,7 +418,6 @@ export const useWKTContract = () => {
         { transaction: tx },
         {
           onSuccess: (result) => {
-            console.log("Auto badge config set successfully", result);
             resolve(result);
           },
           onError: (error) => {
@@ -461,7 +451,6 @@ export const useWKTContract = () => {
         { transaction: tx },
         {
           onSuccess: (result) => {
-            console.log("Badge minted successfully", result);
             resolve(result);
           },
           onError: (error) => {
