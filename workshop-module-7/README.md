@@ -1,5 +1,8 @@
 # WKT dApp — Workshop Token and Badges
 
+## Live Link : 
+https://workshops-token-frontend.vercel.app/
+
 A React + Vite dApp for managing a custom Move-based token (WKT), daily faucet claims, coupon redemptions, peer payments, and NFT workshop badges on IOTA testnet. Includes an admin console for coupon management, auto-badge configuration, and manual badge minting.
 
 ## Features
