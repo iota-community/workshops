@@ -109,7 +109,6 @@ export default function ClaimTokens() {
           </div>
         </Tooltip>
 
-        {/* ==================== CORRECTED MESSAGE BLOCK ==================== */}
         {message && (
           <Flex
             justify="center"
@@ -134,7 +133,6 @@ export default function ClaimTokens() {
             </Text>
           </Flex>
         )}
-        {/* =============================================================== */}
 
         <Box style={{ marginTop: 40 }}>
           <Link to="/" style={{ textDecoration: "none" }}>
