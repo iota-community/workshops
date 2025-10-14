@@ -1,0 +1,37 @@
+[package]
+name = "iota-identity-backend"
+version = "0.1.0"
+edition = "2021" # <-- THIS IS THE CRITICAL FIX
+
+[dependencies]
+# Web Server Framework
+axum = { version = "0.7", features = ["macros"] }
+tokio = { version = "1.43", features = ["full"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+tower-http = { version = "0.5", features = ["cors"] }
+anyhow = "1.0.62"
+
+# Identity and Storage Dependencies
+url = "2"
+base64-url = "1.4" # <-- FIXED: Downgraded to 1.4 to avoid edition2024 conflict
+josekit = "0.8"
+nanoid = "0.4"
+base64 = "0.21"
+identity_iota = { git = "https://github.com/iotaledger/identity.rs", tag = "v1.6.0-beta.2" }
+identity_storage = { git = "https://github.com/iotaledger/identity.rs", package = "identity_storage", tag = "v1.6.0-beta.2", features = ["send-sync-storage"] }
+identity_stronghold = { git = "https://github.com/iotaledger/identity.rs", package = "identity_stronghold", tag = "v1.6.0-beta.2", features = ["send-sync-storage"] }
+identity-eddsa-verifier = { git = "https://github.com/iotaledger/identity.rs", package = "identity_eddsa_verifier", tag = "v1.6.0-beta.2" }
+iota-sdk = { git = "https://github.com/iotaledger/iota.git", package = "iota-sdk", tag = "v0.12.0-rc" }
+iota-sdk-legacy = { package = "iota-sdk", version = "1.0", default-features = false, features = ["tls", "client", "stronghold"] }
+product_common = { git = "https://github.com/iotaledger/product-core.git", tag = "v0.2.1", package = "product_common", features = ["core-client", "transaction"] }
+sd-jwt-payload = { version = "0.2.1", default-features = false, features = ["sha"] }
+secret-storage = { git = "https://github.com/iotaledger/secret-storage.git", tag = "v0.3.0" }
+identity_did = "1.5.1"
+identity_iota_core = "1.5.1"
+
+identity_credential = "1.5.1"
+
+[dependencies.identity_logic]
+path = "crates/identity_logic"
+
