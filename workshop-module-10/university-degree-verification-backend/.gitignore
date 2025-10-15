@@ -1,0 +1,11 @@
+/target
+/university-degree-verification-backend/target/
+/university-degree-verification-backend/holder_doc.json
+/university-degree-verification-backend/holder_fragment.txt
+/university-degree-verification-backend/issuer_doc.json
+/university-degree-verification-backend/issuer_fragment.txt
+/university-degree-verification-backend/vc.jwt
+/university-degree-verification-backend/vp.jwt
+
+/university-degree-verification-backend/*.stronghold
+/university-degree-verification-backend/test_strongholds/
