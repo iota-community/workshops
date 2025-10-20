@@ -1,7 +1,5 @@
 # IOTA Identity Workshop: Native Rust + React
 
-[![Rust](https://img.shields.io/badge/Rust-1.75+-informational?logo=rust)](https://www.rust-lang.org/) [![React](https://img.shields.io/badge/React-18+-informational?logo=react)](https://reactjs.org/) [![IOTA](https://img.shields.io/badge/IOTA-Identity-blue?logo=iota)](https://www.iota.org) [![License](https://img.shields.io/github/license/iotaledger/identity.rs?color=blue)](LICENSE)
-
 This repository contains the code for the "IOTA Identity Guided Codelab Workshop," a hands-on tutorial for building a full-stack University Degree Verification system using IOTA Identity, Native Rust (with Axum), and React. You'll learn to create DIDs, issue Verifiable Credentials (VCs), package them into Verifiable Presentations (VPs), and verify them on the IOTA network.
 
 The workshop simulates a real-world scenario where a university (Issuer) issues a tamper-proof degree credential to a student (Holder), who presents it to an employer (Verifier) for instant validation—without intermediaries.
