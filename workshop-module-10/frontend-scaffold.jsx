@@ -1,3 +1,7 @@
+// Save this code in iota-identity-frontend/src/App.jsx.
+// Run npm install and npm run dev in the iota-identity-frontend directory to verify the frontend runs.
+// You’ll implement the step-specific handlers (handleCreateDid, etc.) in the main workshop steps.
+
 import React, { useState, useCallback, useMemo } from 'react';
 import { Settings, User, Landmark, Shield, CheckCheck, XCircle, ArrowRight } from 'lucide-react';
 
@@ -111,13 +115,12 @@ const App = () => {
         setLoadingStep(step);
         setError('');
         
-        // This is a minimal exponential backoff retry logic
+        // Minimal exponential backoff retry logic
         const maxRetries = 3;
         const initialDelay = 1000;
 
         for (let attempt = 0; attempt < maxRetries; attempt++) {
             try {
-                // NOTE: The body keys (packageId, vcJwt, vpJwt) MUST be camelCase to match the #[serde(rename_all = "camelCase")] in Rust.
                 const response = await fetch(`${apiUrl}${endpoint}`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -139,7 +142,6 @@ const App = () => {
                     setLoadingStep(0);
                     return null;
                 }
-                // Exponential backoff
                 const delay = initialDelay * (2 ** attempt);
                 await new Promise(resolve => setTimeout(resolve, delay));
                 console.warn(`Retrying Step ${step} (${attempt + 1}/${maxRetries})...`);
@@ -151,37 +153,22 @@ const App = () => {
 
     // Step 1: Holder creates DID
     const handleCreateDid = async () => {
-        const data = await handleApiCall(1, '/holder/create-did', {});
-        if (data && data.did) {
-            setDid(data.did);
-        }
+        // To be implemented in Step 1
     };
 
     // Step 2: Issuer issues VC
     const handleIssueVc = async () => {
-        const data = await handleApiCall(2, '/issuer/issue-vc', {});
-        if (data && data.jwt) {
-            setVcJwt(data.jwt);
-        }
+        // To be implemented in Step 2
     };
 
     // Step 3: Holder creates VP
     const handleCreateVp = async () => {
-        // FIX: The payload is constructed to send { packageId: '...', vcJwt: '...' }
-        const data = await handleApiCall(3, '/holder/create-vp', { vcJwt }); 
-        if (data && data.jwt) {
-            setVpJwt(data.jwt);
-        }
+        // To be implemented in Step 3
     };
 
     // Step 4: Verifier validates VP
     const handleValidateVp = async () => {
-        // FIX: The payload is constructed to send { packageId: '...', vpJwt: '...' }
-        const data = await handleApiCall(4, '/verifier/validate', { vpJwt });
-        if (data) {
-            setValidationOutput(data.output);
-            setIsValidationSuccess(data.success);
-        }
+        // To be implemented in Step 4
     };
 
     // --- Status and Control Logic ---
@@ -208,7 +195,6 @@ const App = () => {
     // --- Render ---
 
     return (
-        // Outer wrapper for background and padding
         <div className="min-h-screen bg-gray-100 p-8 font-inter">
             <style>
                 {`
@@ -217,26 +203,21 @@ const App = () => {
                 `}
             </style>
             
-            {/* NEW: Central wrapper to enforce max width and centering */}
-            <div className="w-full max-w-6xl mx-auto"> 
-
+            <div className="w-full max-w-6xl mx-auto">
                 <header className="mb-8">
                     <h1 className="text-4xl font-bold text-gray-900 mb-2">
-                        University Degree Verification dApp
+                        IOTA DID Verification Workshop
                     </h1>
                     <p className="text-gray-600">
                         Demonstrating the end-to-end lifecycle of a Verifiable Credential using React and a Native Rust API (Axum).
                     </p>
                     
-                    {/* Connection Settings Area */}
                     <div className="mt-4 flex flex-col p-4 bg-white rounded-xl shadow-lg border border-gray-200">
                         <div className="flex items-center text-lg font-semibold text-gray-800 mb-3 space-x-2">
                             <Settings className="w-5 h-5 text-gray-500" />
                             <span>Connection Settings</span>
                         </div>
-
                         <div className="space-y-3">
-                            {/* IOTA Package ID Input */}
                             <div className="flex flex-col sm:flex-row sm:items-center">
                                 <label className="text-sm font-medium text-gray-700 sm:w-1/4">IOTA Package ID:</label>
                                 <input
@@ -247,8 +228,6 @@ const App = () => {
                                     className="flex-grow p-2 border border-gray-300 rounded-lg text-sm font-mono mt-1 sm:mt-0"
                                 />
                             </div>
-                            
-                            {/* API Base URL Input (New Field) */}
                             <div className="flex flex-col sm:flex-row sm:items-center">
                                 <label className="text-sm font-medium text-gray-700 sm:w-1/4">API Base URL:</label>
                                 <input
@@ -259,7 +238,6 @@ const App = () => {
                                     className="flex-grow p-2 border border-gray-300 rounded-lg text-sm font-mono mt-1 sm:mt-0"
                                 />
                             </div>
-                            
                             <div className="flex justify-end pt-2">
                                 <button
                                     onClick={resetState}
@@ -280,19 +258,16 @@ const App = () => {
                     </div>
                 )}
 
-                {/* Main Content Area: Now uses w-full */}
                 <div className="space-y-6">
-                    
-                    {/* Step 1: Holder Creates DID */}
-                    <Card title="Student Creates Identity (Decentralized Identifier)" step={1} icon={User} status={getStepStatus(1)}>
-                        <DisplayBox label="Student DID (did:iota:...)" content={did} />
+                    <Card title="Holder Creates DID" step={1} icon={User} status={getStepStatus(1)}>
+                        <DisplayBox label="Holder DID (did:iota:...)" content={did} />
                         <Button 
                             onClick={handleCreateDid} 
                             disabled={currentStep > 1 || !apiUrl || packageId === 'your-iota-identity-pkg-id'} 
                             loading={loadingStep === 1}
                             className="bg-purple-600 hover:bg-purple-700"
                         >
-                            {did ? 'DID Already Created' : 'Create Student Identity'}
+                            {did ? 'DID Already Created' : 'Execute Step 1: Create/Load DID'}
                         </Button>
                     </Card>
 
@@ -300,8 +275,7 @@ const App = () => {
                         <ArrowRight className={`w-8 h-8 ${did ? 'text-gray-500' : 'text-gray-300'}`} />
                     </div>
                     
-                    {/* Step 2: Issuer Issues VC */}
-                    <Card title="University Issues Degree to Student (Verifiable Credential)" step={2} icon={Landmark} status={getStepStatus(2)}>
+                    <Card title="Issuer Issues Verifiable Credential (VC)" step={2} icon={Landmark} status={getStepStatus(2)}>
                         <DisplayBox label="Verifiable Credential (VC JWT)" content={vcJwt} />
                         <Button 
                             onClick={handleIssueVc} 
@@ -309,7 +283,7 @@ const App = () => {
                             loading={loadingStep === 2}
                             className="bg-orange-600 hover:bg-orange-700"
                         >
-                            {vcJwt ? 'VC Already Issued' : 'Issue Degree'}
+                            {vcJwt ? 'VC Already Issued' : 'Execute Step 2: Issue VC'}
                         </Button>
                     </Card>
                     
@@ -317,8 +291,7 @@ const App = () => {
                         <ArrowRight className={`w-8 h-8 ${vcJwt ? 'text-gray-500' : 'text-gray-300'}`} />
                     </div>
 
-                    {/* Step 3: Holder Creates VP */}
-                    <Card title="Student Shows Degree To Employer (Verifiable Presentation)" step={3} icon={User} status={getStepStatus(3)}>
+                    <Card title="Holder Creates Verifiable Presentation (VP)" step={3} icon={User} status={getStepStatus(3)}>
                         <DisplayBox label="Verifiable Presentation (VP JWT)" content={vpJwt} />
                         <Button 
                             onClick={handleCreateVp} 
@@ -326,7 +299,7 @@ const App = () => {
                             loading={loadingStep === 3}
                             className="bg-green-600 hover:bg-green-700"
                         >
-                            {vpJwt ? 'VP Already Created' : 'Show Degree To Employer'}
+                            {vpJwt ? 'VP Already Created' : 'Execute Step 3: Create VP'}
                         </Button>
                     </Card>
 
@@ -334,8 +307,7 @@ const App = () => {
                         <ArrowRight className={`w-8 h-8 ${vpJwt ? 'text-gray-500' : 'text-gray-300'}`} />
                     </div>
 
-                    {/* Step 4: Verifier Validates VP */}
-                    <Card title="Employer Confirms Validity of Degree" step={4} icon={Shield} status={getValidationStatus()}>
+                    <Card title="Verifier Validates Presentation" step={4} icon={Shield} status={getValidationStatus()}>
                         <DisplayBox 
                             label="Validation Output" 
                             content={validationOutput} 
@@ -346,7 +318,7 @@ const App = () => {
                             disabled={currentStep !== 4 || validationOutput} 
                             loading={loadingStep === 4}
                         >
-                            Validate Degree
+                            Execute Step 4: Validate VP
                         </Button>
                         {isValidationSuccess && (
                             <div className="mt-3 text-center text-lg font-semibold text-green-600">
@@ -354,7 +326,6 @@ const App = () => {
                             </div>
                         )}
                     </Card>
-                    
                 </div>
             </div>
         </div>
