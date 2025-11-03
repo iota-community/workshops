@@ -33,7 +33,7 @@ Create a `.env` file with these required variables:
 ```env
 # IOTA Blockchain Configuration
 IOTA_NOTARIZATION_PKG_ID=<your-deployed-package-id>
-NETWORK_URL=https://testnet.iota.cafe/
+NETWORK_URL=https://api.testnet.iota.cafe
 
 # Wallet Configuration - ED25519 private key (bech32 or base64)
 PRIVATE_KEY=iotaprivkey1...
