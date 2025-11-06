@@ -8,7 +8,7 @@ import { IotaClientProvider, WalletProvider } from "@iota/dapp-kit";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Theme } from "@radix-ui/themes";
 import App from "./App";
-import { networkConfig } from "./network/config";
+import { networkConfig } from "./networkConfig";
 import { BrowserRouter } from "react-router-dom";
 import { darkTheme } from "./theme/darkTheme";
 

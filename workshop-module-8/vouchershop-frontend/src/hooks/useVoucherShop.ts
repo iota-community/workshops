@@ -1,4 +1,4 @@
-import { useNetworkVariable } from "../network/config";
+import { useNetworkVariable } from "../networkConfig";
 import { useCurrentAccount, useSignAndExecuteTransaction, useIotaClient } from "@iota/dapp-kit";
 import { Transaction } from "@iota/iota-sdk/transactions";
 import { useState } from "react";
