@@ -11,6 +11,7 @@ import App from "./App";
 import { networkConfig } from "./networkConfig";
 import { BrowserRouter } from "react-router-dom";
 import { darkTheme } from "./theme/darkTheme";
+import { CelebrationProvider } from "./contexts/CelebrationContext";
 
 const queryClient = new QueryClient();
 
@@ -21,7 +22,9 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
         <IotaClientProvider networks={networkConfig} defaultNetwork="testnet">
           <WalletProvider autoConnect theme={darkTheme}>
             <BrowserRouter>
-            <App />
+              <CelebrationProvider>
+                <App />
+              </CelebrationProvider>
             </BrowserRouter>
           </WalletProvider>
         </IotaClientProvider>

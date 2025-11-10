@@ -2,17 +2,7 @@ import { useEffect, useState } from "react";
 import { useVoucherShop } from "../hooks/useVoucherShop";
 import { Transaction } from "@iota/iota-sdk/transactions";
 import Loading from "./molecules/Loading";
-
-interface VoucherShopInfo {
-  admin: string;
-  nftTemplatesCount: number;
-  nftIds: number[];
-  userVoucherStatus?: {
-    hasVoucher: boolean;
-    isVoucherUsed: boolean;
-  };
-  redemptionHistory?: number[];
-}
+import { VoucherShopInfo } from "../types";
 
 export default function AvailableVouchers() {
   const { client, voucherShopObject, packageId, account } = useVoucherShop();

@@ -2,9 +2,12 @@ import { useState, useEffect } from "react";
 import { useVoucherShop } from "../hooks/useVoucherShop";
 import Button from "./molecules/Button";
 import { VoucherShopError } from "../utils/errorHandling";
+import { useCelebration } from "../contexts/CelebrationContext";
+import Tooltip from "./molecules/Tooltip";
 
 export default function ClaimVoucher() {
   const { claimVoucher, validateClaimVoucher, checkVoucherStatus, account } = useVoucherShop();
+  const { triggerCelebration } = useCelebration();
   const [isClaiming, setIsClaiming] = useState(false);
   const [error, setError] = useState<VoucherShopError | null>(null);
   const [success, setSuccess] = useState(false);
@@ -46,7 +49,6 @@ export default function ClaimVoucher() {
     setSuccess(false);
     
     try {
-      // Double-check validation before proceeding
       const validation = await validateClaimVoucher();
       if (!validation.canProceed && validation.error) {
         setError(validation.error);
@@ -55,6 +57,12 @@ export default function ClaimVoucher() {
 
       await claimVoucher();
       setSuccess(true);
+      
+      // Trigger celebration
+      triggerCelebration({
+        title: "🎉 Voucher Claimed! 🎉",
+        message: "Congratulations! You've successfully claimed your voucher. You can now redeem it for an exclusive NFT.",
+      });
 
       // Refresh voucher status after claiming
       if (account?.address) {
@@ -69,18 +77,30 @@ export default function ClaimVoucher() {
   };
 
   if (isValidating) {
-    return <div>Checking if you can claim a voucher...</div>;
+    return (
+      <div style={{ padding: "1rem", textAlign: "center", color: "#a0aec0" }}>
+        ⏳ Checking if you can claim a voucher...
+      </div>
+    );
   }
 
   if (validationError) {
     return (
-      <div style={{ padding: "1rem", border: "1px solid #ff6b6b", borderRadius: "8px", backgroundColor: "#ffe0e0" }}>
-        <h4 style={{ color: "#d63031", margin: "0 0 0.5rem 0" }}>Cannot Claim Voucher</h4>
-        <p style={{ color: "#d63031", margin: "0 0 1rem 0" }}>{validationError.userFriendlyMessage}</p>
+      <div style={{ 
+        padding: "1rem", 
+        border: "1px solid #ff6b6b", 
+        borderRadius: "12px", 
+        backgroundColor: "rgba(255, 107, 107, 0.1)",
+        maxWidth: "400px"
+      }}>
+        <h4 style={{ color: "#ff6b6b", margin: "0 0 0.5rem 0", display: "flex", alignItems: "center", gap: "0.5rem" }}>
+          ⚠️ Cannot Claim Voucher
+        </h4>
+        <p style={{ color: "#ff6b6b", margin: "0 0 1rem 0" }}>{validationError.userFriendlyMessage}</p>
         {validationError.suggestions && validationError.suggestions.length > 0 && (
           <div>
-            <strong style={{ color: "#d63031" }}>Suggestions:</strong>
-            <ul style={{ color: "#d63031", marginTop: "0.25rem" }}>
+            <strong style={{ color: "#ff6b6b" }}>Suggestions:</strong>
+            <ul style={{ color: "#ff6b6b", marginTop: "0.25rem", paddingLeft: "1rem" }}>
               {validationError.suggestions.map((suggestion, index) => (
                 <li key={index}>{suggestion}</li>
               ))}
@@ -92,27 +112,42 @@ export default function ClaimVoucher() {
   }
 
   return (
-    <div>
-      <Button onClick={handleClaim} disabled={isClaiming}>
-        {isClaiming ? "Claiming..." : "Confirm Claim"}
-      </Button>
+    <div style={{ textAlign: "center" }}>
+      <Tooltip content="Claim your exclusive voucher to redeem for limited edition NFTs">
+        <div>
+          <Button 
+            onClick={handleClaim} 
+            disabled={isClaiming}
+            loading={isClaiming}
+            style={{ 
+              background: "linear-gradient(135deg, #4dabf7 0%, #3b82f6 100%)",
+              padding: "12px 24px",
+              fontSize: "16px",
+              fontWeight: "600"
+            }}
+          >
+            {isClaiming ? "Claiming..." : "🎁 Claim Your Voucher"}
+          </Button>
+        </div>
+      </Tooltip>
       
       {error && (
         <div style={{ 
           marginTop: "1rem", 
           padding: "1rem", 
           border: "1px solid #ff6b6b", 
-          borderRadius: "8px", 
-          backgroundColor: "#ffe0e0" 
+          borderRadius: "12px", 
+          backgroundColor: "rgba(255, 107, 107, 0.1)",
+          maxWidth: "400px"
         }}>
-          <h4 style={{ color: "#d63031", margin: "0 0 0.5rem 0" }}>
-            Error {error.code > 0 ? `(Code: ${error.code})` : ''}
+          <h4 style={{ color: "#ff6b6b", margin: "0 0 0.5rem 0", display: "flex", alignItems: "center", gap: "0.5rem" }}>
+            ⚠️ Error {error.code > 0 ? `(Code: ${error.code})` : ''}
           </h4>
-          <p style={{ color: "#d63031", margin: "0 0 1rem 0" }}>{error.userFriendlyMessage}</p>
+          <p style={{ color: "#ff6b6b", margin: "0 0 1rem 0" }}>{error.userFriendlyMessage}</p>
           {error.suggestions && error.suggestions.length > 0 && (
             <div>
-              <strong style={{ color: "#d63031" }}>What you can do:</strong>
-              <ul style={{ color: "#d63031", marginTop: "0.25rem" }}>
+              <strong style={{ color: "#ff6b6b" }}>What you can do:</strong>
+              <ul style={{ color: "#ff6b6b", marginTop: "0.25rem", paddingLeft: "1rem" }}>
                 {error.suggestions.map((suggestion, index) => (
                   <li key={index}>{suggestion}</li>
                 ))}
@@ -126,11 +161,12 @@ export default function ClaimVoucher() {
         <div style={{ 
           marginTop: "1rem", 
           padding: "1rem", 
-          border: "1px solid #27ae60", 
-          borderRadius: "8px", 
-          backgroundColor: "#d5f4e6" 
+          border: "1px solid #51cf66", 
+          borderRadius: "12px", 
+          backgroundColor: "rgba(81, 207, 102, 0.1)",
+          maxWidth: "400px"
         }}>
-          <p style={{ color: "#27ae60", margin: 0 }}>
+          <p style={{ color: "#51cf66", margin: 0, display: "flex", alignItems: "center", gap: "0.5rem", justifyContent: "center" }}>
             ✅ Voucher claimed successfully! You can now redeem it for an NFT.
           </p>
         </div>
