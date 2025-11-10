@@ -35,7 +35,6 @@ export default function AvailableVouchers() {
 
           // If user is connected, get their voucher status and redemption history
           if (account?.address) {
-            // Get voucher status inline to avoid function dependency
             try {
               // Check if has voucher
               const hasVoucherTx = new Transaction();
@@ -101,13 +100,9 @@ export default function AvailableVouchers() {
               if (historyResult.results && historyResult.results.length > 0) {
                 const returnValues = historyResult.results[0]?.returnValues;
                 if (returnValues && returnValues.length > 0) {
-                  // Parse the redemption history from bytes
-                  // For now, just try to extract the length or basic info
                   const rawData = returnValues[0][0];
                   if (Array.isArray(rawData) && rawData.length > 0) {
-                    // This is a simplified parsing - in reality you'd need BCS decoding
-                    // For now, just show that there is redemption history
-                    redemptionHistory = rawData.length > 0 ? [1] : []; // Placeholder
+                    redemptionHistory = rawData.length > 0 ? [1] : [];
                   }
                   console.log('Redemption history raw data:', returnValues[0]);
                 }

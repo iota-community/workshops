@@ -17,7 +17,6 @@ export default function NFTStorefront({ onSelect }: { onSelect: (id: number) => 
         
         console.log('Fetching NFTs from contract...');
         
-        // First, get the shop object to see available NFT IDs
         const shopObject = await client.getObject({
           id: voucherShopObject,
           options: { showContent: true }
@@ -31,7 +30,6 @@ export default function NFTStorefront({ onSelect }: { onSelect: (id: number) => 
           console.log('Available NFT IDs:', nftIds);
           
           if (nftIds.length > 0) {
-            // Use the view_available_nfts function to get actual metadata
             try {
               const tx = await import("@iota/iota-sdk/transactions").then(m => new m.Transaction());
               tx.moveCall({
@@ -71,8 +69,7 @@ export default function NFTStorefront({ onSelect }: { onSelect: (id: number) => 
                     for (let i = 0; i < vectorLength; i++) {
                       // Read ID (u64 - 8 bytes, little endian)
                       const id = data[offset] + (data[offset + 1] << 8) + (data[offset + 2] << 16) + (data[offset + 3] << 24);
-                      offset += 8; // Skip all 8 bytes of u64
-                      
+                      offset += 8; 
                       // Read name string
                       const nameLength = data[offset];
                       offset += 1;
@@ -224,7 +221,6 @@ export default function NFTStorefront({ onSelect }: { onSelect: (id: number) => 
                     border: "1px solid #444"
                   }}
                   onError={(e) => {
-                    // Use a working fallback image
                     e.currentTarget.src = "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgdmlld0JveD0iMCAwIDEyMCAxMjAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxMjAiIGhlaWdodD0iMTIwIiBmaWxsPSIjMzMzMzMzIi8+Cjx0ZXh0IHg9IjYwIiB5PSI2NSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE0IiBmaWxsPSIjZmZmZmZmIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5ORlQ8L3RleHQ+Cjwvc3ZnPgo=";
                   }}
                 />
