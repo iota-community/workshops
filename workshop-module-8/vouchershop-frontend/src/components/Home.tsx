@@ -14,15 +14,12 @@ import 'react-toastify/dist/ReactToastify.css';
 export default function Home() {
   const { account, selectedNft, setSelectedNft, checkVoucherStatus } = useVoucherShop();
   const [activeOperation, setActiveOperation] = useState<string | null>(null);
-  const [voucherStatus, setVoucherStatus] = useState<{hasVoucher: boolean; isVoucherUsed: boolean} | null>(null);
-
   // Check voucher status when account connects
   useEffect(() => {
     const checkStatus = async () => {
       if (account?.address) {
         try {
           const status = await checkVoucherStatus(account.address);
-          setVoucherStatus(status);
           
           // Show welcome toast with voucher status
           if (status.hasVoucher) {
