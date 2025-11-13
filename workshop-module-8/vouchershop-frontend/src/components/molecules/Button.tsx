@@ -8,6 +8,8 @@ interface ButtonProps {
   style?: React.CSSProperties;
   tooltip?: string;
   loading?: boolean;
+  hoverStyle?: React.CSSProperties;
+
 }
 
 export default function Button({

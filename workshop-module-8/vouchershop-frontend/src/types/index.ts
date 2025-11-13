@@ -53,3 +53,13 @@ export interface VoucherShopInfo {
   userVoucherStatus?: { hasVoucher: boolean; isVoucherUsed: boolean };
   redemptionHistory?: number[];
 }
+
+export interface AvailableVouchersHeaderProps {
+  shopInfo: VoucherShopInfo | null;
+  account: any;
+}
+
+export interface AvailableVouchersContentProps {
+  shopInfo: VoucherShopInfo | null;
+  account: any;
+}

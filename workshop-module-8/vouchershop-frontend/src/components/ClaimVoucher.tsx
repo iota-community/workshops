@@ -99,8 +99,8 @@ export default function ClaimVoucher() {
         <p style={{ color: "#ff6b6b", margin: "0 0 1rem 0" }}>{validationError.userFriendlyMessage}</p>
         {validationError.suggestions && validationError.suggestions.length > 0 && (
           <div>
-            <strong style={{ color: "#ff6b6b" }}>Suggestions:</strong>
-            <ul style={{ color: "#ff6b6b", marginTop: "0.25rem", paddingLeft: "1rem" }}>
+            <strong style={{ color: "#f5f10bff" }}>💡 Suggestions:</strong>
+    <ul style={{ color: "#f5e90bdb", marginTop: "0.25rem", paddingLeft: "1rem" }}>
               {validationError.suggestions.map((suggestion, index) => (
                 <li key={index}>{suggestion}</li>
               ))}
