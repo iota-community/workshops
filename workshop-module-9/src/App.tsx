@@ -1,17 +1,17 @@
-import React, { useState } from 'react';
 import {
   ConnectButton,
-  useWallets,
   useIotaClient,
   useSignTransaction,
+  useWallets,
 } from '@iota/dapp-kit';
 import { Transaction } from '@iota/iota-sdk/transactions';
 import axios from 'axios';
+import { useState } from 'react';
 
 // ——— CONFIG ———
-const GAS_STATION_URL = 'http://localhost:9527';
+const GAS_STATION_URL = '/api/gas';
 const GAS_STATION_AUTH = 'supersecret123';
-const PACKAGE_ID = '0x7777e9f8c6d4b2a0987654321098765432109876543210987654321098765432';
+const PACKAGE_ID = '0x2';
 
 // ——— TYPES ———
 interface Post {
@@ -53,76 +53,90 @@ export default function App() {
   };
 
   const handlePost = async () => {
-    if (!isConnected || !address || !content.trim()) {
-      showToast('Connect your wallet and write a spark first!');
-      return;
-    }
+  if (!isConnected || !address || !content.trim()) {
+    showToast('Connect your wallet and write a spark first!');
+    return;
+  }
 
-    setLoading(true);
-    try {
-      // 1. Build transaction
-      const tx = new Transaction();
-      tx.setSender(address);
-      tx.moveCall({
-        target: `${PACKAGE_ID}::media::post_message`,
-        arguments: [tx.pure.string(content)],
-      });
+  setLoading(true);
+  try {
+    // 1. Build the transaction (gas-less at this point)
+    const tx = new Transaction();
+    tx.setSender(address);
+    tx.moveCall({
+      target: `${PACKAGE_ID}::media::post_message`,
+      arguments: [tx.pure.string(content)], // Official way to pass strings
+    });
 
-      // 2. Reserve gas from Gas Station
-      const gasBudget = 50_000_000;
-      const reserveRes = await axios.post(
-        `${GAS_STATION_URL}/v1/reserve_gas`,
-        { gas_budget: gasBudget, reserve_duration_secs: 15 },
-        { headers: { Authorization: `Bearer ${GAS_STATION_AUTH}` } }
-      );
+    // 2. Reserve gas from your Gas Station
+    const gasBudget = 50_000_000;
+    const reserveRes = await axios.post(
+      `${GAS_STATION_URL}/v1/reserve_gas`,
+      { gas_budget: gasBudget, reserve_duration_secs: 120 },
+      { headers: { Authorization: `Bearer ${GAS_STATION_AUTH}` } }
+    );
 
-      const { sponsor_address, reservation_id, gas_coins } = reserveRes.data.result;
+    const { sponsor_address, reservation_id, gas_coins } = reserveRes.data.result;
 
-      // 3. Attach sponsor gas
-      tx.setGasOwner(sponsor_address);
-      tx.setGasPayment(gas_coins);
-      tx.setGasBudget(gasBudget);
+    // 3. Attach sponsor's gas data
+    tx.setGasOwner(sponsor_address);
+    tx.setGasPayment(gas_coins);
+    tx.setGasBudget(gasBudget);
 
-      // 4. Build unsigned bytes
-      const unsignedTxBytes = await tx.build({ client });
+    // 4. Build unsigned transaction bytes (needed for Gas Station)
+    const unsignedTxBytes = await tx.build({ client });
 
-      // 5. User signs via wallet popup
-      const { signature, reportTransactionEffects } = await signTransaction({
-        transaction: tx,
-      });
+    // 5. User signs via dApp Kit hook (wallet popup appears)
+    const { signature, reportTransactionEffects } = await signTransaction({
+      transaction: tx,
+    });
 
-      // 6. Send to Gas Station for co-sign + submit
-      const executeRes = await axios.post(`${GAS_STATION_URL}/v1/execute_tx`, {
+    // 6. Send unsigned bytes + user signature to Gas Station for co-sign & submit
+    const txBytesBase64 = btoa(String.fromCharCode(...new Uint8Array(unsignedTxBytes)));
+    const executeRes = await axios.post(
+      `${GAS_STATION_URL}/v1/execute_tx`,
+      {
         reservation_id,
-        tx_bytes: btoa(String.fromCharCode(...new Uint8Array(unsignedTxBytes))),
+        tx_bytes: txBytesBase64,
         user_sig: signature,
-      });
+      },
+      { headers: { Authorization: `Bearer ${GAS_STATION_AUTH}` } }
+    );
 
-      const txDigest = executeRes.data.effects.transactionDigest;
+    const txDigest = executeRes.data.effects.transactionDigest;
 
-      // 7. Report success to wallet
-      reportTransactionEffects(executeRes.data.effects);
+    // 7. Report effects back to the wallet (required by useSignTransaction)
+    reportTransactionEffects(executeRes.data.effects);
 
-      // 8. Update UI
-      setPosts(prev => [
-        {
-          content,
-          author: address.slice(0, 10) + '...',
-          txid: txDigest,
-          timestamp: Date.now(),
-        },
-        ...prev,
-      ]);
-      setContent('');
-      showToast('Spark posted on-chain!');
+    // 8. Update the UI
+    setPosts(prev => [
+      {
+        content,
+        author: address.slice(0, 10) + '...',
+        txid: txDigest,
+        timestamp: Date.now(),
+      },
+      ...prev,
+    ]);
+    setContent('');
+    showToast('Spark posted on-chain!');
 
-    } catch (err) {
-      console.error('Post failed:', err);
-      showToast('Failed: ' + getErrorMessage(err));
-    } finally {
-      setLoading(false);
+  } catch (err) {
+    console.error('Post failed:', err);
+
+    let errorMessage = 'Transaction failed';
+    if (err instanceof Error) {
+      errorMessage = err.message;
+    } else if (err && typeof err === 'object' && 'response' in err) {
+      const axiosErr = err as { response?: { data?: { error?: string } } };
+      errorMessage = axiosErr.response?.data?.error ?? 'Request failed';
     }
-  };
+
+    showToast('Failed: ' + errorMessage);
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <div style={{ maxWidth: 600, margin: '40px auto', fontFamily: 'system-ui', lineHeight: 1.6 }}>
@@ -200,7 +214,7 @@ export default function App() {
                   <br />
                   <small>
                     <a
-                      href={`https://explorer.iota.org/testnet/transaction/${p.txid}`}
+                      href={`https://explorer.iota.org/?network=testnet&transaction=${p.txid}`}
                       target="_blank"
                       rel="noreferrer"
                       style={{ color: '#0068FF' }}
