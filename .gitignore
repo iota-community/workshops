@@ -1,2 +1,6 @@
 build
 node_modules
+public/
+
+# Ignore gas-station repo folder
+workshop-module-9.1/spark-mini-workshop/gas-station/
