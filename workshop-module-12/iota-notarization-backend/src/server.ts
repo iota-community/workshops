@@ -11,6 +11,25 @@ const PORT = process.env.PORT || 3001;
 app.use(cors());
 app.use(express.json({ limit: "10mb" }));
 
+// Request logging middleware
+app.use((req, res, next) => {
+  const timestamp = new Date().toISOString();
+  const method = req.method;
+  const url = req.originalUrl;
+  
+  console.log(`\n📨 [${timestamp}] ${method} ${url}`);
+  
+  if (req.query && Object.keys(req.query).length > 0) {
+    console.log(`   Query: ${JSON.stringify(req.query)}`);
+  }
+  
+  if (req.body && Object.keys(req.body).length > 0) {
+    console.log(`   Body: ${JSON.stringify(req.body, null, 2)}`);
+  }
+  
+  next();
+});
+
 // Routes
 app.use("/api/notarizations", notarizationRoutes);
 
